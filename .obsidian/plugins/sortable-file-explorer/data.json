@@ -1,0 +1,33 @@
+{
+  "sortOrder": {
+    "Home.md": 0,
+    "附件": 8,
+    "经验": 6,
+    "来源": 7,
+    "模板": 3,
+    "日记": 5,
+    "收件箱": 1,
+    "项目": 2,
+    "学习": 4
+  },
+  "collapsedFolders": {
+    "/": true,
+    "来源": true,
+    "附件": true,
+    "经验": true,
+    "日记": true,
+    "学习": true,
+    "模板": true,
+    "项目/Profit Calculator": true,
+    "项目/Conver System": true,
+    "项目": true,
+    "收件箱": true
+  },
+  "hideFileExtensions": false,
+  "showIcons": true,
+  "showBaseBadge": false,
+  "outlineMode": "focused",
+  "outlineColor": "",
+  "useCustomOutlineColor": true,
+  "modifierAction": "openNewTab"
+}
