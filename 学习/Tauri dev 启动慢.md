@@ -4,6 +4,7 @@ tags: [tauri, 性能]
 date: 2026-08-06
 source: 外部整理（AI 生成，未验证）
 status: unverified
+verify: 实测 tauri dev 启动计时，对照笔记结论后升格
 ---
 
 `tauri dev` 启动慢或热更新慢是 Tauri 开发中非常常见的问题，通常由 **Rust 编译耗时**、**前端构建工具配置不当** 或 **系统环境问题** 引起。

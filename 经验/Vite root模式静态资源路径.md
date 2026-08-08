@@ -26,11 +26,11 @@ Vite 配置 `root: "src"` 时，构建的**静态资源根目录**变为 `src/pu
 
 **Vite `root: "src"` 模式下，希望被逐字复制到构建产物的静态资源必须放 `src/public/`，而非 `src/assets/`。** `assets/` 只给 JS 动态 import 用。开发模式正常不代表构建正确。
 
-## 防复发
+## 防复发（惯例：开工预检时对照执行，无需勾选；动作项见条目内去向）
 
-- [ ] 新项目检查 Vite `root` 配置，确认 `public/` 路径相对于 root
-- [ ] 静态资源（图片、字体等）放 `{root}/public/` 而非 `{root}/assets/`
-- [ ] 构建后检查 `dist/` 确认资源文件存在
+- 新项目检查 Vite `root` 配置，确认 `public/` 路径相对于 root
+- 静态资源（图片、字体等）放 `{root}/public/` 而非 `{root}/assets/`
+- 构建后检查 `dist/` 确认资源文件存在
 
 ## 关联
 

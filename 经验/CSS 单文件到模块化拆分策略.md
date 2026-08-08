@@ -27,12 +27,12 @@ status: verified
 
 **CSS 模块化拆分按层递进：`base.css`（变量 + 重置）→ `layout.css`（侧边栏 + 内容区）→ `components.css`（卡片/按钮/表单/弹窗等通用组件）→ `animations.css`（动画关键帧）→ `pages/*.css`（各页面专属样式）。** 一个汇总文件 `style.css` 做 `@import` 集中管理。规则：变量/重置放 base，布局放 layout，跨页面复用放 components，页面专属放 pages/。
 
-## 防复发
+## 防复发（惯例：开工预检时对照执行，无需勾选；动作项见条目内去向）
 
-- [ ] 新项目一开始就建立 CSS 模块化结构，不等到 2000+ 行再拆
-- [ ] 明确每个 CSS 文件的职责边界（base / layout / components / animations / pages）
-- [ ] 页面专属样式不注入 JS 字符串（`PAGE_STYLES`），放入 `css/pages/` 文件
-- [ ] 汇总文件 `@import` 顺序：base → layout → components → animations → pages
+- 新项目一开始就建立 CSS 模块化结构，不等到 2000+ 行再拆
+- 明确每个 CSS 文件的职责边界（base / layout / components / animations / pages）
+- 页面专属样式不注入 JS 字符串（`PAGE_STYLES`），放入 `css/pages/` 文件
+- 汇总文件 `@import` 顺序：base → layout → components → animations → pages
 
 ## 关联
 

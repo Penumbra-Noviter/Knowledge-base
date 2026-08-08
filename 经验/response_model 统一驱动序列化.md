@@ -28,10 +28,10 @@ status: verified
 
 同样适用于返回 `list[dict]` → 改为 `list[Schema]`，路由声明 `response_model` 即可。
 
-## 防复发
+## 防复发（惯例：开工预检时对照执行，无需勾选；动作项见条目内去向）
 - [x] 后端所有 list 端点不再有手写 dict
 - [x] 新增字段只需改 ORM model + Schema
-- [ ] 新端点默认使用 `response_model` 驱动序列化
+- 新端点默认使用 `response_model` 驱动序列化
 
 ## 关联
 - [[Provider 标识符 keyid 分离]]

@@ -28,11 +28,11 @@ Rust 没有内置 ORM，每个实体天然需要重复的 CRUD 操作。如果�
 
 **Rust 桌面应用（Tauri/SQLite）消除 CRUD 样板的标准模式：`Repository<T>` trait + `impl_repo!` 宏（生成 SELECT_COLUMNS、row_to_entity 及 CRUD 方法） + 通用 CRUD 命令（通过 `entity: String` 调度到具体 repo）。** 专有命令只保留有业务逻辑的操作（如签到中的连续天数计算），纯 CRUD 不走专有路由。
 
-## 防复发
+## 防复发（惯例：开工预检时对照执行，无需勾选；动作项见条目内去向）
 
-- [ ] 新增实体时三步走：`models/X.rs` 定义模型 → `impl_repo!` 生成样板 → `generic_crud.rs` 注册路由
-- [ ] 不创建纯 CRUD 的专有命令；只在有业务逻辑时开新命令文件
-- [ ] `lib.rs` 的 `generate_handler![]` 只注册通用命令 + 专有命令
+- 新增实体时三步走：`models/X.rs` 定义模型 → `impl_repo!` 生成样板 → `generic_crud.rs` 注册路由
+- 不创建纯 CRUD 的专有命令；只在有业务逻辑时开新命令文件
+- `lib.rs` 的 `generate_handler![]` 只注册通用命令 + 专有命令
 
 ## 关联
 

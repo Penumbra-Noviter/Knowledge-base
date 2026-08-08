@@ -27,11 +27,11 @@ Tauri v2 **不再默认注入** `window.__TAURI__` 全局对象。前端必须�
 
 **Tauri v2 不再有 `window.__TAURI__` 全局——前端必须显式 ESM 导入 `@tauri-apps/api/core`；参数名在前端用 camelCase、后端用 snake_case，Tauri 自动转换。** 升级或新项目直接按 v2 惯例来，不要套用 v1 经验。
 
-## 防复发
+## 防复发（惯例：开工预检时对照执行，无需勾选；动作项见条目内去向）
 
-- [ ] 新 Tauri 项目或升级时，先确认 `@tauri-apps/api` 版本，按 v2 导入方式写
-- [ ] 前端 `invoke()` 参数使用 camelCase，Rust 命令参数使用 snake_case
-- [ ] 测试 Mock 使用 `vi.mock('@tauri-apps/api/core', ...)` 而非 mock 全局对象
+- 新 Tauri 项目或升级时，先确认 `@tauri-apps/api` 版本，按 v2 导入方式写
+- 前端 `invoke()` 参数使用 camelCase，Rust 命令参数使用 snake_case
+- 测试 Mock 使用 `vi.mock('@tauri-apps/api/core', ...)` 而非 mock 全局对象
 
 ## 补充（ARC-06 实测）
 

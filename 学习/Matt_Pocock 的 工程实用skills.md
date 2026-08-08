@@ -4,6 +4,7 @@ tags: [skills]
 date: 2026-08-06
 source: 外部整理（AI 生成，未验证）
 status: unverified
+verify: 对照本库已安装 skills 清单核对推荐与触发词后升格
 ---
 
 ## grill-me

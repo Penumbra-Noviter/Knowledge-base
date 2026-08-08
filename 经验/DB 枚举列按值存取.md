@@ -21,9 +21,9 @@ SQLAlchemy `Enum` 默认 `values_callable` 存成员名（`Role.user` → `"user
 ## 代价
 零迁移（`models/message.py:29-34`）——做对了就是零成本。
 
-## 防复发
+## 防复发（惯例：开工预检时对照执行，无需勾选；动作项见条目内去向）
 - [x] `message.py` 已按值存取
-- [ ] 新枚举列一律声明 `values_callable=lambda enum: [e.value for e in enum]`，不依赖默认
+- 新枚举列一律声明 `values_callable=lambda enum: [e.value for e in enum]`，不依赖默认
 
 ## 关联
 - [[response_model 统一驱动序列化]]（同为「存储/序列化契约单点化」族）

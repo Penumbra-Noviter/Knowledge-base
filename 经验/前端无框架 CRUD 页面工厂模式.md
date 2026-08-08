@@ -26,11 +26,11 @@ Vanilla JS 无框架项目没有组件化机制，每个页面独立编写时天
 
 **Vanilla JS 无框架项目通过工厂函数消除 CRUD 重复：`createCrudPage()` 接收配置对象（`{entity, fields, formTemplate, renderItem}`），返回 `{mount, unmount}`。** 工厂封装了 `loadList()`、`showForm()`、`handleCreate()`/`handleUpdate()`/`handleDelete()` 的完整生命周期。有特殊需求的页面在工厂返回后做 `override` 扩展。
 
-## 防复发
+## 防复发（惯例：开工预检时对照执行，无需勾选；动作项见条目内去向）
 
-- [ ] 新增纯 CRUD 页面时，优先使用工厂函数，不手写重复模式
-- [ ] 工厂函数的配置对象保持简单（entity + fields + template + render 四个核心）
-- [ ] 有特殊需求的页面使用工厂 + 覆盖（override）模式，而非绕过工厂重写
+- 新增纯 CRUD 页面时，优先使用工厂函数，不手写重复模式
+- 工厂函数的配置对象保持简单（entity + fields + template + render 四个核心）
+- 有特殊需求的页面使用工厂 + 覆盖（override）模式，而非绕过工厂重写
 
 ## 关联
 

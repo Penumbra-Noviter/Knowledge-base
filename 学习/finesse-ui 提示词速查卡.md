@@ -4,6 +4,7 @@ tags: [skills, finesse-ui]
 date: 2026-08-06
 source: 外部整理（AI 生成，未验证）
 status: unverified
+verify: 实际调用 finesse-ui skill 一次，核对速查卡字段后升格
 ---
 
 # finesse-ui 提示词速查卡

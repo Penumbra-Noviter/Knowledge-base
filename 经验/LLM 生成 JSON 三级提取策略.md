@@ -26,9 +26,9 @@ LLM 输出格式不稳定——即使提示「只返回 JSON」也不保证纯 J
 ## 代价
 三级提取实现 + `test_brace_extraction` 等测试（`document_parser.py:150-180`）。
 
-## 防复发
+## 防复发（惯例：开工预检时对照执行，无需勾选；动作项见条目内去向）
 - [x] `document_parser.py` 已实现三级提取 + 白名单
-- [ ] 新的 LLM 结构化输出场景直接复用该模式（parse → filter → validate → persist）
+- 新的 LLM 结构化输出场景直接复用该模式（parse → filter → validate → persist）
 
 ## 关联
 - [[连接测试必须测用户实际配置]]（同为「模型输出/配置不可信，系统侧兜底」族）

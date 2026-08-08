@@ -27,12 +27,12 @@ status: verified
 
 **worktree 用完即弃，不留 Rust 编译缓存尸体。** 确认合并后立即清理 worktree 目录，尤其是 Tauri/Rust 项目——每个 worktree 的 `target/` 是主项目的数倍。
 
-## 防复发
+## 防复发（惯例：开工预检时对照执行，无需勾选；动作项见条目内去向）
 
-- [ ] 已完成合并的 worktree 目录立即删除（`rm -rf .claude/worktrees/<name>`）
-- [ ] 可在 `.gitignore` 中确认 `.claude/worktrees/` 已排除（避免被 git 追踪）
-- [ ] 批量删除所有已合并 worktree：`rm -rf .claude/worktrees/`
-- [ ] 若 disk pressure 敏感，考虑每批次 agent 完成后立即清理，而非等全部结束
+- 已完成合并的 worktree 目录立即删除（`rm -rf .claude/worktrees/<name>`）
+- 可在 `.gitignore` 中确认 `.claude/worktrees/` 已排除（避免被 git 追踪）
+- 批量删除所有已合并 worktree：`rm -rf .claude/worktrees/`
+- 若 disk pressure 敏感，考虑每批次 agent 完成后立即清理，而非等全部结束
 
 ## 关联
 
