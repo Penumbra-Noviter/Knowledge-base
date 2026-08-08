@@ -1,3 +1,6 @@
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json
 .trash/
+
+# Obsidian 插件 UI 状态（运行时持续变动）
+.obsidian/plugins/sortable-file-explorer/data.json
