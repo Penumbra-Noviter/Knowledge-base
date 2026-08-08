@@ -13,15 +13,13 @@
   "collapsedFolders": {
     "/": true,
     "来源": true,
-    "附件": true,
-    "经验": true,
     "日记": true,
-    "学习": true,
-    "模板": true,
-    "项目/Profit Calculator": true,
-    "项目/Conver System": true,
-    "项目": true,
-    "收件箱": true
+    "归档/日记": true,
+    "归档": true,
+    "附件": true,
+    "收件箱": true,
+    "项目/川流不息（Personal Dashboard）": true,
+    "项目/Conver System": true
   },
   "hideFileExtensions": false,
   "showIcons": true,

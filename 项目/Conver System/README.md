@@ -6,7 +6,7 @@ date: 2026-08-02
 
 # Conver System（角色对话系统）
 
-当前主力项目。Phase 1-6 已完成（含 P6.1/6.2/6.3、P2.5）；Ollama 已于 2026-08-03 封存，活跃待办 P6.4 Tauri + P6.5 多 tab（以仓库 TICKETS.md 为准，2026-08-06 审计修正）。
+Phase 1-6 已完成（含 P6.1/6.2/6.3、P2.5）；Ollama 已于 2026-08-03 封存，活跃待办 P6.4 Tauri + P6.5 多 tab（以仓库 TICKETS.md 为准，2026-08-06 审计修正）。
 
 技术栈：FastAPI + SQLAlchemy 2.0（同步 ORM）+ SQLite（`PRAGMA foreign_keys=ON`）+ Pydantic v2 + HTML/Vanilla JS ESM，LLM 走自定义 Provider 抽象层。
 
