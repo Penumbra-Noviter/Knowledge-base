@@ -4,6 +4,8 @@ tags: [LLM, JSON, 解析, 容错, conver-system]
 date: 2026-08-06
 project: Conver System
 source: 自身项目实践
+summary: LLM 结构化输出做三级兜底提取（直接 loads→代码块→花括号截取）+ 白名单过滤 + 类型容错；字段约束在系统侧，容错在解析侧
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· Conver System 2026-08-06 实践
 status: verified
 ---
 

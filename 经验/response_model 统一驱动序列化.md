@@ -4,6 +4,8 @@ tags: [架构, 序列化, 重构, FastAPI, conver-system]
 date: 2026-08-06
 project: Conver System
 source: 自身项目实践
+summary: FastAPI 序列化走 response_model(from_attributes=True)，手写 dict 映射是重复维护反模式——Schema 是字段清单唯一事实来源
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· Conver System 2026-08-06 实践
 status: verified
 ---
 

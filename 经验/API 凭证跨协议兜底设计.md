@@ -4,6 +4,8 @@ tags: [架构, 凭证管理, 回退链, 聚合平台, conver-system]
 date: 2026-08-06
 project: Conver System
 source: 自身项目实践
+summary: 聚合平台一个 key 通吃多协议——凭证解析用三级回退链（Provider 特定→同协议槽位→跨协议兜底），共享优先而非每 Provider 独立
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· Conver System 2026-08-06 实践
 status: verified
 ---
 

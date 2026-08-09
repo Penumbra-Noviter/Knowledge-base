@@ -4,6 +4,8 @@ tags: [CSS, 前端, 架构, 重构, personal-dashboard]
 date: 2026-08-06
 project: 川流不息
 source: 自身项目实践
+summary: CSS 按 base→layout→components→animations→pages 分层拆分、汇总文件 @import 集中管理；新项目一开始就分模块，别等 2000+ 行再拆
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· 川流不息 2026-08-06 实践
 status: verified
 ---
 

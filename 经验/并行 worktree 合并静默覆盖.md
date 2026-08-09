@@ -4,6 +4,8 @@ tags: [git, worktree, 并行开发, 合并, 川流不息]
 date: 2026-08-06
 project: 川流不息
 source: 自身项目实践
+summary: 并行 worktree 合并「零冲突」≠零丢失——git 只查行级冲突；涉及共享文件时列为合并后必查项，验证「改动是否还在」
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· 川流不息 2026-08-06 实践
 status: verified
 ---
 

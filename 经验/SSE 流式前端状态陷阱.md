@@ -4,6 +4,8 @@ tags: [前端, 异步, SSE, 流式, 状态管理, conver-system]
 date: 2026-08-06
 project: Conver System
 source: 自身项目实践
+summary: ReadableStream reader.read() 必须处理 done 结束分支（触发 onDone 重置状态），controller.close() 要显式调用——否则流式 UI 状态悬挂
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· Conver System 2026-08-06 实践
 status: verified
 ---
 

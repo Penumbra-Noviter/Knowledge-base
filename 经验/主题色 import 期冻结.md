@@ -4,6 +4,8 @@ tags: [Python, 初始化时序, import]
 date: 2026-08-02
 project: 收益计算器
 source: 自身项目实践
+summary: 运行时状态绝不进模块顶层（import 期冻结成常量）；同根 bug 复发说明必须上结构性防复发（AST 静态检查）而非再修一次
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· 收益计算器 2026-08-02 实践
 status: verified
 ---
 

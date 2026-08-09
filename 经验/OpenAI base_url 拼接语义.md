@@ -4,6 +4,8 @@ tags: [OpenAI, SDK, base_url, 规范化, 聚合平台, conver-system]
 date: 2026-08-06
 project: Conver System
 source: 自身项目实践
+summary: SDK 的 base_url 是服务根、自动追加路径段——用户控制台地址需规范化为 SDK 地址（补 /v1，不误改 v1/v1beta）
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· Conver System 2026-08-06 实践
 status: verified
 ---
 

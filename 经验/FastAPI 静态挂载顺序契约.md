@@ -4,6 +4,8 @@ tags: [FastAPI, 静态文件, 路由顺序, 契约, conver-system]
 date: 2026-08-06
 project: Conver System
 source: 自身项目实践
+summary: StaticFiles 挂 / 会按注册顺序遮蔽后注册的 API 路由——API 路由先注册且用 /api 前缀，把顺序契约写成代码注释防回归
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· Conver System 2026-08-06 实践
 status: verified
 ---
 

@@ -4,6 +4,8 @@ tags: [Vite, 前端, 构建, 静态资源, personal-dashboard]
 date: 2026-08-06
 project: 川流不息
 source: 自身项目实践
+summary: Vite root:"src" 时逐字复制到产物的静态资源必须放 src/public/ 而非 src/assets/——开发模式正常不代表构建正确
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· 川流不息 2026-08-06 实践
 status: verified
 ---
 

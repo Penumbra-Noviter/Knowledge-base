@@ -4,6 +4,8 @@ tags: [第三方API, 集成, 测试, fixture, 收益计算器]
 date: 2026-08-06
 project: 收益计算器
 source: 自身项目实践
+summary: 第三方集成第一条代码是「抓一份真实响应存 fixture」——请求头/凭证握手/响应 schema 三环都不能凭假设，mock 通过测试≠集成成功
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· 收益计算器 2026-08-06 实践
 status: verified
 ---
 

@@ -4,6 +4,8 @@ tags: [前端, Vanilla JS, 架构, CRUD, 工厂模式, personal-dashboard]
 date: 2026-08-06
 project: 川流不息
 source: 自身项目实践
+summary: Vanilla JS 用 createCrudPage() 工厂函数（entity/fields/formTemplate/renderItem 配置）消除 CRUD 重复，特殊页面工厂返回后 override
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· 川流不息 2026-08-06 实践
 status: verified
 ---
 

@@ -4,6 +4,8 @@ tags: [Python, 金额, 舍入, 校验, 收益计算器]
 date: 2026-08-06
 project: 收益计算器
 source: 自身项目实践
+summary: round() 是半数取偶非四舍五入——金额用 Decimal quantize ROUND_HALF_UP；校验与持久化必须共用同一个已舍入值
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· 收益计算器 2026-08-06 实践
 status: verified
 ---
 

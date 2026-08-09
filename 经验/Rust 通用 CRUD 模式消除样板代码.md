@@ -4,6 +4,8 @@ tags: [Rust, 架构, 桌面应用, CRUD, 模板宏, personal-dashboard]
 date: 2026-08-06
 project: 川流不息
 source: 自身项目实践
+summary: Rust/Tauri 消除 CRUD 样板：Repository<T> trait + impl_repo! 宏 + 通用 CRUD 命令（entity 字符串调度）；纯 CRUD 不建专有命令
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· 川流不息 2026-08-06 实践
 status: verified
 ---
 

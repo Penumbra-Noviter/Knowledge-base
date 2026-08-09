@@ -4,6 +4,8 @@ tags: [前端, Vanilla JS, 测试, seam, 依赖注入, conver-system]
 date: 2026-08-06
 project: Conver System
 source: 自身项目实践
+summary: API 层暴露 setFetch(fn) seam（默认 globalThis.fetch）+ 渲染抽成纯函数模块——无框架 Vanilla JS 也能高质量单测
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· Conver System 2026-08-06 实践
 status: verified
 ---
 

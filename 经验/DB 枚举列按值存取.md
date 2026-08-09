@@ -4,6 +4,8 @@ tags: [数据库, SQLAlchemy, 枚举, 迁移, conver-system]
 date: 2026-08-06
 project: Conver System
 source: 自身项目实践
+summary: SQLAlchemy Enum 用 values_callable 按 member.value 落库，存量 VARCHAR 数据零迁移兼容；枚举列一律显式声明，不依赖默认成员名
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· Conver System 2026-08-06 实践
 status: verified
 ---
 

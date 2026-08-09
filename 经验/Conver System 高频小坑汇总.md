@@ -4,6 +4,8 @@ tags: [LLM, 环境, pytest, 汇总, conver-system]
 date: 2026-08-06
 project: Conver System
 source: 自身项目实践
+summary: Conver System 零散坑汇总——底层异常映射可读提示、Git Bash 遮蔽 MSVC linker、pytest Test* 命名避让、流式 UI 首 token 才建气泡、易退役常量集中配置
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· Conver System 2026-08-06 实践
 status: verified
 ---
 

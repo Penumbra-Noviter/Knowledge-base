@@ -4,6 +4,8 @@ tags: [Tauri, Rust, 桌面应用, 磁盘空间, subagent, personal-dashboard]
 date: 2026-08-04
 project: 川流不息
 source: 自身项目实践
+summary: 并行 subagent worktree 各带完整 target/ 编译缓存（单个 1.6-3.1GB，12 个累积 26GB）——worktree 用完即弃，不留 Rust 编译缓存尸体
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· 川流不息 2026-08-04 实践
 status: verified
 ---
 

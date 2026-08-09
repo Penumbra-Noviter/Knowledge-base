@@ -4,6 +4,8 @@ tags: [Tauri, Rust, 桌面应用, IPC, 前端, personal-dashboard]
 date: 2026-08-06
 project: 川流不息
 source: 自身项目实践
+summary: Tauri v2 不再注入 window.__TAURI__——前端显式 ESM import @tauri-apps/api/core；参数前端 camelCase→Rust snake_case（只作用于顶层参数）
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· 川流不息 2026-08-06 实践
 status: verified
 ---
 

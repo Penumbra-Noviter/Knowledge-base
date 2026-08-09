@@ -4,6 +4,8 @@ tags: [架构, Provider, 标识符, 演进, conver-system]
 date: 2026-08-06
 project: Conver System
 source: 自身项目实践
+summary: 前端下拉框 value 永远用语义标识符 key/slug 而非位置索引——Provider 增至 8+ 时 data-index 静默错位，语义标识符增删不移位
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· Conver System 2026-08-06 实践
 status: verified
 ---
 

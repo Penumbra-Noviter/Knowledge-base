@@ -4,6 +4,8 @@ tags: [Tauri, E2E, WebDriverIO, 测试基建, 川流不息]
 date: 2026-08-06
 project: 川流不息
 source: 自身项目实践
+summary: Tauri v2 E2E 必踩：tauri-driver 外部启动（driverProvider external）+ onPrepare 先构建 debug 产物 + e2e 独立目录隔离 wdio 依赖
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· 川流不息 2026-08-06 实践
 status: verified
 ---
 

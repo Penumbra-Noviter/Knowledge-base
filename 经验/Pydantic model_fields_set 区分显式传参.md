@@ -4,6 +4,8 @@ tags: [Pydantic, 回退链, 配置, 显式传参, conver-system]
 date: 2026-08-06
 project: Conver System
 source: 自身项目实践
+summary: 回退链判断「是否显式传参」用 Pydantic v2 model_fields_set，不用值比较——显式传默认值与没传必须可区分
+provenance: git 4f686a5（2026-08-08 知识库批量入库）· Conver System 2026-08-06 实践
 status: verified
 ---
 
