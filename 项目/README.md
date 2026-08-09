@@ -14,6 +14,8 @@ date: 2026-08-06
 | 衍生框架 | `D:\Desktop\Craft\Profit Calculator 衍生的框架` | pyside6-skeleton | PySide6 骨架 | 实验产物，弃置待清理 |
 | Conver System | `D:\Desktop\Craft\conver system` | Conver System 角色对话系统 | FastAPI + SQLAlchemy + Vanilla JS + 自建 LLM Provider | 主力，Phase 6 |
 | 川流不息 | `D:\Desktop\Craft\Personal Dashboard` | 川流不息 · 个人工作台 | Tauri v2 + Rust + Vite + Vanilla JS | 已交付，维护期 |
+| ZCode 环境 | `C:\Users\Administrator\.zcode` | ZCode 客户端环境治理（skills / commands / tools，非代码仓库） | Markdown skills + Python 工具脚本 | 持续维护 |
+| Model Fingerprint | `D:\Desktop\Craft\model-fingerprint` | Model Fingerprint（中转站模型指纹识别） | Python 3.12 CLI + PySide6 GUI + PyInstaller | 已交付，持续迭代 |
 | （夭折） | `D:\Desktop\Craft\6a742fdf7e0125eccfa9b7fd` | Auto-reply（微信自动化） | Python 图像识别 | 夭折，残留未清理 |
 
 ## 命名史
@@ -28,5 +30,7 @@ date: 2026-08-06
 - [[项目/川流不息（Personal Dashboard）/README|川流不息（Personal Dashboard）]]
 - [[项目/Profit Calculator/收益计算器项目经验复盘|Profit Calculator（收益计算器）]]
 - [[项目/Profit Calculator 衍生的框架/README|Profit Calculator 衍生的框架]]
+- [[项目/ZCode 环境/persona|ZCode 环境]]
+- [[项目/Model Fingerprint/persona|Model Fingerprint]]
 
 > 新项目立项时在本表加一行（正式名/目录/技术栈），project 字段从本表取值。
