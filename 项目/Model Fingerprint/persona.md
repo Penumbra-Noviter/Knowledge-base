@@ -23,6 +23,7 @@ status: active
 - ADR-0001~0010 不重议（`CONSENSUS.md`）；改权重/阈值/LR 常数前必读 `ALGORITHM_OPTIMIZATION.md`（§2 严谨性缺口 + §6 红线）
 - **不拖分契约**：unknown/error/skipped 维度不提供证据（LR=1 或等价中性语义），不可破坏（ALGORITHM_OPTIMIZATION §6；T-416 后 linear 亦对齐）
 - 判定/入库门槛 0.6 消费校准分（`decision_score`，ADR-0010）；阈值政策单源 `fingerprint/thresholds.py`
+- 判定分**行为政策**单源 `fingerprint/score_policy.py`（decision_score 双型回退链 / band_for 分档 / apply_evasion_penalty 罚则；数值政策仍 thresholds.py 叶，T-432~T-434）
 - `.gitattributes` `*.py text eol=lf`（2026-08-09 T-412 后全仓生效）
 - 报告形状：三态（deep/quick/regions）经 `report_contract.py` 契约，消费方 `report_kind()` 分派
 - 共享文档（TO-TICKETS / DEV_LOG / CLAUDE / README / MANUAL / CONSENSUS）是事实来源：待办唯一来源 `TO-TICKETS.md`，已做 `DEV_LOG.md`，决策 `CONSENSUS.md`
@@ -41,3 +42,4 @@ status: active
 ## 变更记录
 
 - 2026-08-09 建档（批次 1~4 会话，14 工单 T-401~T-418，commit c4cc72b 推送 origin/main）
+- 2026-08-10 批次 7（T-432~T-434 判定分政策塌缩，commit a8a02e2；测试锁升级接线锁教训入经验库）
