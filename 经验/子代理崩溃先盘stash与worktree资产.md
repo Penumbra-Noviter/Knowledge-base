@@ -2,7 +2,7 @@
 type: lesson
 tags: [subagent, worktree, stash, 崩溃恢复, 编排]
 date: 2026-08-09
-project: Model Fingerprint
+project: ZCode 环境
 source: 自身项目实践
 summary: 子代理崩溃恢复先盘资产再动手——stash pop 后崩溃会让部分实现只存在于该 worktree 工作区，重派前查 stash list + worktree list
 provenance: DEV_LOG「T-406」条目（stash 交接注）· commit 4e43f96 · 2026-08-09 批次 2 会话

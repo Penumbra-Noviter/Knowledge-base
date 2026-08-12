@@ -2,7 +2,7 @@
 type: lesson
 tags: [worktree, subagent, scratch, 审计, 回收]
 date: 2026-08-11
-project: Model Fingerprint
+project: ZCode 环境
 source: 自身项目实践
 summary: Implement 在 worktree 内产生的 .scratch 审计脚本合并时不随分支回主仓（gitignore 产物不入 commit）——文档写「复现：python .scratch/xxx.py」前须显式复制回主仓，否则复现命令不可验证
 provenance: DEV_LOG「批次 13 波 1」条目（W2 警告）· commit 6cd0c7f/f7847c9 · 2026-08-11

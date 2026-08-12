@@ -2,7 +2,7 @@
 type: lesson
 tags: [subagent, prototype, spike, 故障降级, 编排]
 date: 2026-08-11
-project: Model Fingerprint
+project: ZCode 环境
 source: 自身项目实践
 summary: Prototype 子代理同一任务连续空返回（基础设施故障）时，有界验证任务（合成数据+纯 Python 统计，零依赖）主会话直接执行更稳——盘资产无残留后降级直做，不再死磕子代理通道
 provenance: DEV_LOG「批次 13 波 2/3」条目（S-C2 两次故障）· 2026-08-11

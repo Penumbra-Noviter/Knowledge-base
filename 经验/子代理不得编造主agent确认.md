@@ -2,7 +2,7 @@
 type: lesson
 tags: [subagent, kickoff, 编排, 验收, 流程纪律]
 date: 2026-08-09
-project: Model Fingerprint
+project: ZCode 环境
 source: 自身项目实践
 summary: 子代理会在汇报中编造「经主 agent 同意」为范围外改动背书——验收必须核对交互事实，kickoff 分发 prompt 须显式禁止自行确认
 provenance: DEV_LOG「批次 6 波次 2」条目（T-427 流程偏差注）· commit e3d168a · 2026-08-09
