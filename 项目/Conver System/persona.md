@@ -38,9 +38,16 @@ status: active
 - LLM 结构化输出三级兜底提取 + 白名单过滤（[[LLM 生成 JSON 三级提取策略]]）
 - 架构深化候选按 /improve-codebase-architecture 报告推荐强度**分批直落** kickoff 全自动批次（ARC-1~8 / ARC-9 Strong 批 / ARC-10 剩余批三次实证：先 Strong 后剩余，两批落地 14 候选全部完成、零回滚）
 - 「对齐/镜像契约」类改动必须含真实消费者连接级用例（[[跨语言镜像契约须对真实消费者验证]]：SQLAlchemy 零解码 vs sqlite3 URI 会解码，镜像互相印证 = 盲区共享）
-- 技术债区（TICKETS 非阻断遗留）清理走 kickoff 全自动批次：逐项 git grep 复核现状（审计快照惯例），可修的做、不可达/设计意图的「复核确认维持」关闭归档（2026-08-12 16 项清零实证）
+- 架构深化候选按 /improve-codebase-architecture 报告推荐强度**分批直落** kickoff 全自动批次（ARC-1~8 / ARC-9 Strong 批 / ARC-10 剩余批三次实证：先 Strong 后剩余，两批落地 14 候选全部完成、零回滚）
+- 冒烟 mock 拦截 glob 陷阱：Playwright route glob `**/api/chats/**` **不匹配无尾路径段的精确路径**（`/api/chats`）——非流式请求漏拦触发 1 次真实外部 API（2026-08-13 td-arch-health 批次冒烟失误）；mock 拦截须同时注册精确路径与带尾段 glob
+- 波末增量审核 Falsify 实证价值：3 轮审核抓到 2 个跨工单耦合真实缺陷（parse-document 422 wire 回归 / data-content 属性注入面——后者是「旧流式路径安全、收口后回归不安全」的路径级回归），「波内最该做的验证」成立；修复均先红后绿 + 防复发断言
+- 视觉验证降级惯例：模型无图像输入能力时 GUI 冒烟以 DOM 结构化证据为准 + 截图存档供用户查看，如实标注降级（2026-08-13 td-arch-health 批次首次执行）
+- 技术债区（TICKETS 非阻断遗留）清理走 kickoff 全自动批次：逐项 git grep 复核现状（审计快照惯例），可修的做、不可达/设计意图的「复核确认维持」关闭归档（2026-08-12 16 项清零实证）；**票面修复建议本身也须实证复核**——TD-15 票面建议 providerSelect.value === '__custom__' 被实测否定（provider 下拉永不为 '__custom__'，条件恒假会让守卫形同虚设），修正为 modelSelect 与裸读分支精确对齐（来源：TD-15~24 kickoff）
 
 ## 变更记录
+- 2026-08-13 td-arch-health 批次更新：架构深化批次（8 工单 3 波，13 做 + 3 关闭）——错误映射/凭据解析/附件头/字段语义/气泡工厂/启动契约八项单点收口；波末 Falsify 抓 2 个跨工单耦合阻断（parse-document 422 回归 + data-content 注入面）；冒烟 mock glob 漏拦教训（`**/api/chats/**` 不匹配 `/api/chats`）；视觉验证降级惯例（来源：td-arch-health kickoff）
+- 2026-08-13 TD-25~27 批次更新：平台守卫形态实证（断言级 skipif 不可表达 → 函数级修正，票面建议实证复核惯例再验证）；skipif 可见信号优于静默平台包裹；轻量档单文件测试改动 = 主树独立分支直行（无 worktree）（来源：TD-25~27 kickoff）
+- 2026-08-12 TD-15~24 批次更新：票面修复建议实证复核惯例（TD-15 providerSelect 恒假被否定 → modelSelect 对齐裸读分支）；Windows worktree junction 清理坑（git worktree remove 失败 → cmd rmdir 拆链接）（来源：TD-15~24 kickoff）
 - 2026-08-12 TD-8~12 批次更新：子代理只读探索禁改主工作树（共享文件写权归主会话）；契约锁测试语义（基线绿非先红）与回归测试区分（来源：TD-8~12 kickoff）
 - 2026-08-12 TD 批次更新：技术债清理连续两批实证（16 项清零 + TD-1~7 清零）；「先红后绿」硬验收在守卫类工单全面落地；文档同步前提须 grep 全仓验证（来源：TD-1~7 kickoff）
 - 2026-08-12 技术债批次更新：技术债区清理 = kickoff 全自动批次 + 复核确认维持关闭惯例（来源：技术债区 16 项清零 kickoff）

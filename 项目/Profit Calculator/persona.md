@@ -37,11 +37,15 @@ status: active
 - 测试注入 seam 优先于环境变量哨兵与私有属性 monkeypatch：构造注入（`client=None` 自建兜底）取代生产代码里的测试守卫（C2-02/03 落地）；测试与生产共享同一 stub 工厂
 - 设置文件 schema 所有者：已知键白名单 + 未知键保留 + `update(patch)` 合并回写，窗口层键访问经常量（C3-10/11 落地）
 - 装配与渲染收敛契约（C4）：仪表盘装配走 `build_dashboard` 直构（bundle 字段名锁定测试防漂移），MainWindow 只解包保留属性——新增组件改 bundle 不改 MainWindow；KPI 渲染唯一入口 KpiPresenter 三出口（update/apply_theme_styles/reset），共享纯函数单一来源经调用期延迟解析规避循环 import（C4-01/02 落地）
-- KPI 动画 per-tile 槽契约（C4-债2，根治版）：数值落值三态——直落（数据不足/数值未变/动效关闭）/ 动画 count-up / 同槽替换即落终；动画槽 `_countup_anims: dict[QLabel, ...]` 每磁贴独立、在途动画始终可寻址（顶出截断语义不存在）；落值入口统一 pop + `setCurrentTime(duration)` 优雅落终（同磁贴再触发零陈旧帧窗口，直落分支同调用内被 setText 覆盖）；Stopped 残留 entry 不清理（有界 ≤2）；先枚举在途动画寻址路径再定修复（C4-债1 两轮推翻：全局 stop 冻结中间值 / per-label 漏出槽动画）（C4-债1 收敛 + C4-债2 根治落地）
+- KPI 动画 per-tile 槽契约（C4-债2/C4-债3，根治版）：数值落值三态——直落（数据不足/数值未变/动效关闭）/ 动画 count-up / 同槽替换即落终；动画槽 `_countup_anims: dict[QLabel, ...]` 每磁贴独立、在途动画始终可寻址（顶出截断语义不存在）；落值入口统一 pop + `setCurrentTime(duration)` 优雅落终（同磁贴再触发零陈旧帧窗口，直落分支同调用内被 setText 覆盖）；动画生命周期随状态收敛——自然结束 → finished 回调（**weakref 闭包破引用环**：强闭包在销毁路径无 reset 的生产代码（closeEvent 不调 reset）下会令 presenter+在途动画存活 → 迟到帧写已删 label → access violation）→ identity 检查移除 entry + deleteLater，reset 显式 stop+deleteLater，Qt children 与 dict 双双有界；先枚举在途动画寻址路径再定修复（C4-债1 两轮推翻：全局 stop 冻结中间值 / per-label 漏出槽动画）（C4-债1 收敛 → C4-债2 根治 → C4-债3 生命周期闭环）
+- 动画生命周期收敛模式（C4-债3/债4 通用化）：动画对象生命周期随状态收敛——启动新动画前 `stop()` 旧动画（零帧零 finished 防残帧），`finished` 回调 identity 检查后 `deleteLater` 回收；跨目标 stop 需先分目标域（同目标 stop 无条件安全，跨目标会冻结中间值）；「有界」断言按实体生命周期口径写（dict 有界 ≠ 对象有界）；测试构造裸控件即时销毁须排水 qWait（GC abort hazard）；**2026-08-13 C4-债5 补充：DWS + 强闭包 finished 回调组合在「控件动画在途时销毁」路径确定性崩溃**（强闭包环 edit→_shake_anim→anim→信号→闭包→edit 依赖循环 GC 整链回收与 DWS 延迟删除互踩 → 双重删除 access violation）——finished 闭包一律 weakref 破环（kpi_presenter/input_panel 同款）；「已有 DWS 回收模式的组件补 finished 清理」不可照搬（fade_in_widget 同族风险，C4-债6），照搬前先枚举销毁路径
 - 存储容错读统一 seam（C7）：所有 JSON 容错读走 `try_load_json`（读写对称含加密）；可选依赖异常类惰性持有（模块顶层零 import）；容错契约含解密失败（InvalidToken → None + on_error）（C7 落地）
 
 - 2026-08-12 更新：KPI 动画落终契约并入（来源：C4-债1 技术债批次，commit 8bc4e68..8ba15eb）
 - 2026-08-12 更新：KPI 动画落终契约 → per-tile 槽契约（来源：C4-债2 根治落地，commit d33def8..e6c8bc5）
+- 2026-08-12 更新：per-tile 槽契约补生命周期闭环 + weakref 破环模式（来源：C4-债3 落地，commit d3fbeff..99e2f5a）
+- 2026-08-12 更新：新增动画生命周期收敛模式稳定条目（来源：C4-债4 落地，commit dcb941e..8ecf654）
+- 2026-08-13 更新：生命周期收敛模式条目补 DWS+强闭包环在途销毁崩溃实证 + weakref 破环定案（来源：C4-债5 落地，commit 641ab0c..6001a4a）
 ## 变更记录
 - 2026-08-12 更新：装配/渲染收敛契约 + 存储容错读统一 seam 两条稳定模式并入（来源：C4→C7 架构批次，commit 98b2ee1..9916efb）
 - 2026-08-11 更新：主题契约树遍历、注入 seam 优先、设置 schema 所有者三条稳定模式并入（来源：架构加深批次 C1/C2/C3，commit 633f549 起）
