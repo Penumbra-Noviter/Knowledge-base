@@ -17,66 +17,24 @@ date: 2026-08-06
 | [[项目/README|项目]] | 每项目一个子目录 + 项目注册表（目录↔project 名映射） |
 | 经验 | 原子避坑条目（模板：[[经验模板]]） |
 | 学习 | 学习笔记：CSS / Git / Skills / 系统提示词 |
-| 来源 | 参考资料与来源 URL |
 | 附件 | 图片等附件 |
 | [[日记模板]] · [[经验模板]] · [[项目预检模板]] | 模板 |
 
-## 🚀 当前项目（注册表：[[项目/README]]）
+## 🚀 当前项目
 
-- [[项目/Conver System/README|Conver System]] — 主力；Ollama 已封存，待办 P6.4 Tauri + P6.5 多 tab
-- [[项目/川流不息（Personal Dashboard）/README|川流不息（Personal Dashboard）]] — Tauri v2 工作台，已交付，维护期
-- [[项目/Profit Calculator/收益计算器项目经验复盘|Profit Calculator 经验复盘]] — 已交付，复盘范本（含 08-02 后附章）
-- [[项目/Profit Calculator 衍生的框架/README|Profit Calculator 衍生的框架]] — PySide6 骨架，框架化实验产物（待清理/登记）
+项目注册表（目录 ↔ project 名 ↔ 技术栈 ↔ 状态）见 [[项目/README]]，以该表为准，此处不再重复维护。
 
 ## 💥 避坑清单（来自项目实战）
 
-### 收益计算器
-- [[测试夹具污染真实用户数据]]
-- [[固定日期测试是定时炸弹]]
-- [[主题色 import 期冻结]]
-- [[空环境首启即崩]]
-- [[打包覆盖丢数据]]
-- [[文档漂移]]
-- [[影子测试体系]]
-- [[依赖方向反转]]
-- [[测试与架构高频小坑汇总]]
-- [[第三方 API 集成先抓真实响应]]
-- [[双主题渲染路径回归]]
-- [[Python 银行家舍入]]
-- [[存储保留与展示窗口解耦]]
-- [[多页面懒加载守卫]]
-- [[实验性重构不留痕]]
+```dataview
+LIST summary
+FROM "经验"
+WHERE type = "lesson"
+SORT file.name ASC
+GROUP BY project
+```
 
-### Conver System
-- [[审计快照过期需复核]]
-- [[Provider 标识符 keyid 分离]]
-- [[API 凭证跨协议兜底设计]]
-- [[SSE 流式前端状态陷阱]]
-- [[前端模块化拆分中的循环依赖处理]]
-- [[response_model 统一驱动序列化]]
-- [[架构摩擦渐进发现与分批落地]]
-- [[连接测试必须测用户实际配置]]
-- [[LLM 生成 JSON 三级提取策略]]
-- [[Pydantic model_fields_set 区分显式传参]]
-- [[无框架前端 fetch seam]]
-- [[DB 枚举列按值存取]]
-- [[OpenAI base_url 拼接语义]]
-- [[FastAPI 静态挂载顺序契约]]
-- [[Conver System 高频小坑汇总]]
-
-### 川流不息（Personal Dashboard）
-- [[CSS 单文件到模块化拆分策略]]
-- [[Rust 通用 CRUD 模式消除样板代码]]
-- [[Tauri v2 IPC 前端调用差异]]
-- [[Vite root模式静态资源路径]]
-- [[worktree膨胀26G教训]]
-- [[前端无框架 CRUD 页面工厂模式]]
-- [[并行 worktree 合并静默覆盖]]
-- [[ISO 周边界不能硬编码]]
-- [[Tauri v2 E2E 基建必踩配置]]
-
-### 通用
-- [[项目启动先构想预期]] — 预期效果与精准提示词先于代码
+> 按 project 字段自动分组（Dataview 渲染）。
 
 ## 🧠 学习中
 
