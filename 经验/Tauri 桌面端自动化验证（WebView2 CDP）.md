@@ -33,8 +33,10 @@ status: verified
 
 - 桌面端 UI 验证的自动化法：`WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222` 环境变量（tauri dev 启动前设置）→ WebView2 开 CDP 口 → playwright-core `chromium.connectOverCDP('http://127.0.0.1:9222')` 驱动窗口（页面 = boot.html 跳转后的后端 URL；同源 iframe 可 frameLocator 深探游戏内部 DOM）
 - 壳拉起的后端子进程随壳树杀（taskkill //T //F）连带回收；验证后 netstat 复核端口
+- **控制台闪框验证的前提**：从 Git Bash/PowerShell 直接启动壳会继承现有控制台句柄，子控制台程序（taskkill 等）附着到已有控制台→不创建新窗口→闪框问题被掩盖。必须用 `cmd /c start "" <path>`（ShellExecute 语义，无控制台句柄注入）才等同双击场景。控制台窗口创建异步且瞬时（taskkill 存活 ~200ms），轮询探针（EnumWindows / conhost 差量 / WINEVENT 钩子）都难以稳定捕获；证据链靠「代码事实 + taskkill 确在运行」+ 用户视觉确认。
 
 ## 防复发
 
 - 桌面验证一律走 CDP 法（原型 + U7 两次实证，5 步断言全过）
 - dev 后端启动参数（CONVER_BACKEND_CMD 引号形式 / CONVER_BACKEND_CWD / venv PATH）固化为 .cmd 启动脚本，不再手工拼
+- 验证 GUI 壳控制台子进程行为时，确认启动方式是否附带控制台（ShellExecute vs 直接 spawn），否则闪框可能被掩盖误判为已修复

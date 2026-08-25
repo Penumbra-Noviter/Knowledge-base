@@ -20,6 +20,7 @@ Conver System 的其他零散小坑，按「能复用」程度整理。每条都
 | 定义 `TestXxx` 命名的 schema 后 pytest 告警「可能被误认为测试类」 | pytest 默认按 `Test*` 前缀收集测试类——非测试类（尤其 schema/模型）命名避开 `Test` 前缀（`ConnectionTestRequest` 可，`TestConnectionRequest` 不可） |
 | 流式对话先创建空白 assistant 气泡；错误发生在首 token 前时 `assistantDiv` 为 null 崩溃 | 流式 UI 先显示 thinking 指示器，**第一个 token 到达才创建气泡**；错误在首 token 前发生要移除指示器并兜底建错误气泡（防 null 引用） |
 | 换模型 `claude-sonnet-4` → `claude-sonnet-5` 需同步 11 个文件（含 `.env.example`、`state.js`、`index.html`） | 模型名/版本号这类「会退役」的常量应集中 config，否则每次换模型牵动全局——「会变的值」永远不散落 |
+| 改完前端代码，打包后发现旧 UI 还在 | `dist/conver_backend/conver_backend.exe` 内嵌前端静态文件，但它的构建时间戳无任何提示可查（`build-backend.ps1` 产出、`build-desktop.ps1` 按需补齐）。前端改动后必须**主动重跑 `build-backend.ps1`** 再打壳，否则 `tauri build` 打包的是一个静默过期的后端包——没有构建失败、没有日志警告，直接交付旧 UI |
 
 ## 通用教训提炼
 

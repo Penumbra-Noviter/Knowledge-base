@@ -16,14 +16,16 @@ date: 2026-08-06
 | 川流不息 | `D:\Desktop\Craft\Personal Dashboard` | 川流不息 · 个人工作台 | Tauri v2 + Rust + Vite + Vanilla JS | 已交付，维护期 |
 | ZCode 环境 | `C:\Users\Administrator\.zcode` | ZCode 客户端环境治理（skills / commands / tools，非代码仓库） | Markdown skills + Python 工具脚本 | 持续维护 |
 | Model Fingerprint | `D:\Desktop\Craft\model-fingerprint` | Model Fingerprint（中转站模型指纹识别） | Python 3.12 CLI + PySide6 GUI + PyInstaller | 已交付，持续迭代 |
-| GameCheating | `D:\Desktop\Craft\GameCheating` | GameCheating Ren'Py 存档修改器集合 | Python 3.12 + PySide6 + PyInstaller + pytest | 持续迭代 |
+| ctrl 脚本管理器 | `D:\Desktop\Craft\Control` | Ctrl · 统一脚本管理器（定时机/取消/缓存清理 + 插件导入） | Python 3.12 CLI + PySide6 托盘 + PowerShell 插件 | 已交付首期，持续迭代（GUI 规划中） |
 | （夭折） | `D:\Desktop\Craft\6a742fdf7e0125eccfa9b7fd` | Auto-reply（微信自动化） | Python 图像识别 | 夭折，残留未清理 |
 
 ## 命名史
 
+
 - 「川流不息」与「Personal Dashboard」曾混用（产品名 vs 目录名）→ 统一为产品名「川流不息」
 - 「衍生框架」无独立 project 名——笔记挂 `project: 收益计算器` + `tags: 衍生框架`，本表承担映射（2026-08-08 目录已改名，去掉原双空格）
 - 夭折项目（Auto-reply）不入册也不给 project 名，仅本表登记残留位置
+- GameCheating 项目笔记（persona 等）于 2026-08-22 并入 Studying Game 库 `Cheating Game/` 分支，注册表移除其行与项目页链接；仓库本体 `D:\Desktop\Craft\GameCheating` 不变
 
 ## 项目页
 
@@ -33,6 +35,6 @@ date: 2026-08-06
 - [[项目/Profit Calculator 衍生的框架/README|Profit Calculator 衍生的框架]]
 - [[项目/ZCode 环境/persona|ZCode 环境]]
 - [[项目/Model Fingerprint/persona|Model Fingerprint]]
-- [[项目/GameCheating/README|GameCheating]]
+- [[项目/ctrl 脚本管理器/persona|ctrl 脚本管理器]]
 
 > 新项目立项时在本表加一行（正式名/目录/技术栈），project 字段从本表取值。
