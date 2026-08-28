@@ -17,6 +17,7 @@ status: active
 - 先 ADR 后代码（架构级改动先 ADR.md 标状态）；先结论后证据、不含装饰性过渡语
 - 公共函数 type hints + docstring；模块 `__all__`；文件头 `__future__ import annotations`
 - 覆盖率目标 ≥90%（pytest.ini `--cov-fail-under=90` 已门禁）；CLI 优先、渐进式（MVP→稳定→体验→性能）
+- **UI 设计偏好：克制、理性、简约**（2026-08-28 明确）——这只是个工具，不用过多的元素堆砌，太多视觉堆料只会抢占注意力。GUI 主题 `ctrl.gui.theme`（QSS）按此落地：冷灰中性 ramp + 单一青玉强调色、hairline 边框、无渐变/紫光/装饰性堆叠；每页一个主操作高亮、其余描边幽灵按钮；finesse 只走 product register（SPECTACLE 低），不走 brand register
 
 ## 固定约束
 
@@ -37,7 +38,25 @@ status: active
 - tray 纯逻辑测试化：`sys.modules` 注入 mock PySide6（_make_icon/_tool_action/_build_menu），run_tray 事件循环 `# pragma: no cover`
 - 测试隔离锚点：`import ctrl.core.registry as R` 后 `monkeypatch.setattr(R, "REGISTRY_PATH", ...)`（模块内取值，防 fixture 替换失败）
 
+## 稳定模式（display-gui 批次，2026-08-27）
+
+- **GUI headless 测试共享替身**：`tests/_gui_stubs.py` 统一实体替身 + `_FakeSignal` 真投递；**fixture 导入前必须弹出缓存的 `ctrl.gui.*` 模块**（`sys.modules.pop`）——多测试文件共用替身类后，先跑的 fixture 会把模块绑定到自己的替身，后跑者断言本地类身份失败（顺序依赖回归，be640b2 教训）
+- **单实例 = Windows 命名互斥体**（`single_instance.py`，CreateMutexW `ERROR_ALREADY_EXISTS` 原子判定）+ QLocalSocket 聚焦管道：QLocalServer 二次 listen 在本机 PySide6 6.11.1 **不返回 AddressInUseError**（in-process 两次 listen 均 True），独占判定不可靠——实证后弃用
+- **ICC 机制事实**（spike#1 实证，替代 win-hdr-fix 假设）：切换/还原 CURRENT_USER **免提权**、仅 `--import` 需管理员；`ColorProfileAddDisplayAssociation` **add-only（setAsDefault=true）直接生效**，remove→add 顺序非必需；错误码 0x800707DF 幂等 / 0x80070709 非显示 profile / 0x80070002 无关联；SYSTEM_WIDE 非提权「假成功」（S_OK 但未生效）代码层禁止
+- **display 工具提权语义**：`ToolInfo.requires_admin=False` + 门面 `requires_elevation(action)` 仅 `--import` 返回 True（profile/restore/save_default 内联免提权，gamma 永不提权）；互斥校验先于提权
+- **饱和度物理边界**：gamma ramp 是逐通道 1D LUT，3×3 饱和度矩阵行和=1 强制灰度中性 → `build_curve(b,c,g,0)==(b,c,g,3)`，**饱和度经 gamma ramp 不可见**（TD-33）；GUI/CLI 均不暴露饱和度，真实饱和度需驱动级（NVIDIA Digital Vibrance）
+
+## 稳定模式（td-consume-4 批次，2026-08-27）
+
+- **GUI 工单覆盖率口径怪癖**：Windows + pytest-cov + 假 PySide6 sys.modules 懒加载下，`--cov=src/ctrl/gui/X.py`（路径口径）报「module never imported / No data / 0%」；须用**模块名口径** `--cov=ctrl.gui.X`（同一文件）才正常采集。GUI 单工单测试一律用 `-o addopts="--cov=ctrl.gui.<模块> --cov-report=term-missing --cov-fail-under=90"`（覆盖 pytest.ini 默认全仓口径，避免稀释）
+- **QtNetwork 可先于 QApplication 构造（F1 实证）**：`single_instance.acquire()` 在 create_app（建 QApplication）前构造 QLocalServer/QLocalSocket **不崩溃**——真机冒烟验证首实例稳定存活、二次实例正确检测并 exit 0；listen 失败走防御路径（中文警告），互斥体独占语义保持
+- **GUI 导航单一信号**：`MainWindow` 导航只连 `currentItemChanged`（承载点击/键盘/程序化选中），不再连 `itemClicked`——一次选中仅一次 `show_tool_page`；通用页切页从不 delete 旧页（孤儿化 + QThread 销毁风险，TD-44 pre-existing）
+- **display 刷新 Seam**：托盘/外部切换 ICC 后经 `MainWindow.refresh_display_page()` 公共方法刷新 display 页，不再 `getattr` 触 `_display_page`/`_refresh_profiles` 私有成员（TD-41）
+
 ## 变更记录
 
-- 2026-08-26（td-consume-2 批次）TECH_DEBT 13 条消费 = 3 工单（T-019~021）+ 6 关闭；262 tests / 99.27%；commit 42d9081→ff85d8f；四轴 0 阻断、修复轮次 0/5；新候选 TD-28~32 落盘
-  - 本批最有价值发现：spec 对 `(str, Enum)` 的 `str()` 行为假设不成立（Python 3.12 `str(Category.CLEANUP)` = `"Category.CLEANUP"`），实现期实测纠偏并加回归锚测试——高不确定实现点须实测后定稿
+- 2026-08-27（td-consume-4 批次，project-kickoff 全自动档标准档）消费 TECH_DEBT TD-33~42：5 工单（T-035~039）全合并；547 tests / 99.69%；期末四轴 0 阻断；修复轮次 0/5；冒烟通过（含 F1 QtNetwork 前置真机验证）；Neat 清场 5 分支 + 5 worktree + scratch 批次
+  - 本批最有价值发现：**F1 真机验证**（T-037 把 QtNetwork 构造前置到 QApplication 之前不崩溃，防御路径生效）+ 范围授权教训（TD-34 GUI 层验收的实现文件 generic_page.py 在 plan-tickets 文件范围外——验收语义指向的实现文件可能不在范围，plan-tickets 需交叉核对验收锚点与其实现文件）
+
+- 2026-08-27（display-gui 批次，project-kickoff 全自动档标准档）9 工单（T-026 spike + T-027~034）全合并；534 tests / 99.69%；期末四轴 0 阻断；修复轮次 0/5；Neat 清场 21 项；TECH_DEBT 新增 TD-33~42 落盘
+  - 本批最有价值发现：**spike#1 实测推翻参考实现 win-hdr-fix 的两条假设**（「需管理员」「先 remove 再 add 才生效」均不成立）——参考实现的实证结论必须在本机复验，不能照搬；以及 T-028 HRESULT 符号数缺陷（ctypes `c_long` 返回负值 vs 无符号常量比较永不匹配，真机 `--status` 才触出）

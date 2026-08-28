@@ -34,7 +34,9 @@ status: active
 - 配置模式：app/config.py 用 os.environ + Final 常量，环境变量注入
 - 测试架构：fake ApiClient + 虚拟时钟 + injectable notifier，不触真实网络
 - 并发模式：git worktree 隔离并行工单，波末 --no-ff 合并
+- **测试环境**：跑测/验收必须干净 env（`unset TARGET_VENUE / SPORT_ID / NEED_CAPTCHA`）——`app/config.py` 在 import 期冻结 env 默认值，shell 污染会致 test_config 5 个无关红（波 5 / 波 8 两次实测遇到）；覆盖率命令用点号模块路径（`--cov=app.aj_captcha`，pytest-cov 不接受 `.py` 结尾）
 
 ## 变更记录
 - 2026-08-20：初始创建，项目启动 | DEV_LOG#1
 - 2026-08-21：波 3 补充 — 全自动档偏好、sportId 配置化、验证码开关、交付脚本自检机制、code-review 证伪修复流程 | DEV_LOG#7
+- 2026-08-28：波 8 补充 — 测试环境干净 env 约束 + pytest-cov 点号模块路径（实测两次） | DEV_LOG 波 8

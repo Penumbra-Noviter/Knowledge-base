@@ -8,6 +8,8 @@ date: 2026-08-06
 
 知识库 `project` 字段 ↔ 仓库目录 ↔ 技术栈 的映射表（2026-08-06 审计建立）。**反查项目以此表为准**——按 project 标签找项目、按目录找笔记都从这里出发。
 
+> ⚠️ **库边界（2026-08-28 固化）**：本表只登记**程序开发**项目。游戏研究类项目（GameCheating / 汉化）的笔记在**独立 vault** `D:\Desktop\knowledge base\Studying Game`（`Cheating Game/` 与 `汉化/` 分支），不在此登记——预检/新建时按项目域选库，不要在本库为它们建档。
+
 | project 字段 | 仓库目录 | 产品/全称 | 技术栈 | 状态 |
 |---|---|---|---|---|
 | 收益计算器 | `D:\Desktop\Craft\Profit Calculator` | 收益计算器 | PySide6 + pyqtgraph + PyInstaller | 已交付，持续迭代 |
@@ -17,6 +19,8 @@ date: 2026-08-06
 | ZCode 环境 | `C:\Users\Administrator\.zcode` | ZCode 客户端环境治理（skills / commands / tools，非代码仓库） | Markdown skills + Python 工具脚本 | 持续维护 |
 | Model Fingerprint | `D:\Desktop\Craft\model-fingerprint` | Model Fingerprint（中转站模型指纹识别） | Python 3.12 CLI + PySide6 GUI + PyInstaller | 已交付，持续迭代 |
 | ctrl 脚本管理器 | `D:\Desktop\Craft\Control` | Ctrl · 统一脚本管理器（定时机/取消/缓存清理 + 插件导入） | Python 3.12 CLI + PySide6 托盘 + PowerShell 插件 | 已交付首期，持续迭代（GUI 规划中） |
+| 代订场 | `D:\Desktop\Craft\代订场` | 代订场（场地预约自动化，WAF 实战迭代） | Python CLI + scheduler + 超级鹰验证码 | 实战迭代 |
+| 抖音视频下载器 | `D:\Desktop\Craft\抖音视频下载器_reversed` | 抖音视频下载器（逆向） | Python + tkinter + Playwright | 已交付，维护期 |
 | （夭折） | `D:\Desktop\Craft\6a742fdf7e0125eccfa9b7fd` | Auto-reply（微信自动化） | Python 图像识别 | 夭折，残留未清理 |
 
 ## 命名史
@@ -26,6 +30,7 @@ date: 2026-08-06
 - 「衍生框架」无独立 project 名——笔记挂 `project: 收益计算器` + `tags: 衍生框架`，本表承担映射（2026-08-08 目录已改名，去掉原双空格）
 - 夭折项目（Auto-reply）不入册也不给 project 名，仅本表登记残留位置
 - GameCheating 项目笔记（persona 等）于 2026-08-22 并入 Studying Game 库 `Cheating Game/` 分支，注册表移除其行与项目页链接；仓库本体 `D:\Desktop\Craft\GameCheating` 不变
+- 汉化（hanhua）项目于 2026-08-28 归位至 Studying Game 库 `汉化/` 分支——persona 自本库 `项目/汉化/` 迁出（此前误建在本库、经验笔记一直在 Studying Game，预检两层分裂的根因，已统一）；本库不再有汉化项目页，仓库本体 `D:\Desktop\Craft\hanhua` 不变
 
 ## 项目页
 
@@ -36,5 +41,7 @@ date: 2026-08-06
 - [[项目/ZCode 环境/persona|ZCode 环境]]
 - [[项目/Model Fingerprint/persona|Model Fingerprint]]
 - [[项目/ctrl 脚本管理器/persona|ctrl 脚本管理器]]
+- [[项目/代订场/persona|代订场]]
+- [[项目/抖音视频下载器/persona|抖音视频下载器]]
 
 > 新项目立项时在本表加一行（正式名/目录/技术栈），project 字段从本表取值。
