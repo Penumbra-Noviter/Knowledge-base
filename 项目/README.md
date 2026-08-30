@@ -12,6 +12,7 @@ date: 2026-08-06
 
 | project 字段 | 仓库目录 | 产品/全称 | 技术栈 | 状态 |
 |---|---|---|---|---|
+| AI自动获客 | `D:\Desktop\Craft\AI自动获客` | AI自动获客（抖音获客自动化，原版 huoke-radar-app 行为规格自建） | Electron 壳 + FastAPI + Vue3 + SQLite + OpenAI 兼容 AI 适配 | 首期交付（2026-08-30），持续迭代 |
 | 收益计算器 | `D:\Desktop\Craft\Profit Calculator` | 收益计算器 | PySide6 + pyqtgraph + PyInstaller | 已交付，持续迭代 |
 | 衍生框架 | `D:\Desktop\Craft\Profit Calculator 衍生的框架` | pyside6-skeleton | PySide6 骨架 | 实验产物，弃置待清理 |
 | Conver System | `D:\Desktop\Craft\conver system` | Conver System 角色对话系统 | FastAPI + SQLAlchemy + Vanilla JS + 自建 LLM Provider | 主力，Phase 6 |
@@ -34,6 +35,7 @@ date: 2026-08-06
 
 ## 项目页
 
+- [[项目/AI自动获客/README|AI自动获客]]
 - [[项目/Conver System/README|Conver System]]
 - [[项目/川流不息（Personal Dashboard）/README|川流不息（Personal Dashboard）]]
 - [[项目/Profit Calculator/收益计算器项目经验复盘|Profit Calculator（收益计算器）]]

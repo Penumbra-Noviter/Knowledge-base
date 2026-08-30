@@ -21,7 +21,7 @@ status: active
 
 ## 固定约束
 
-- **提权永远分离**（ADR-004）：管理器自身永不请求管理员令牌；提权只在 runner/elevator 按工具元数据（`requires_admin`）触发；提权传输直达 `sys.executable -m ctrl`（不经 cmd/bat 二次解析，消元字符注入面），PYTHONPATH 经进程环境继承（追加语义 + `rstrip(";")` 消双分号，TD-02/TD-24 后）
+- **提权永远分离**（ADR-004）：管理器自身永不请求管理员令牌；提权只在 runner/elevator 按工具元数据（`requires_admin`）触发；提权目标为 `python.exe <src/ctrl/_elev_bootstrap.py> [--hold-open] [--output-file <path>] -- <子命令>`（ADR-012 起：不经 cmd/bat 二次解析，消元字符注入面），bootstrap 在提权进程内由脚本自身路径注入 src 到 sys.path（**UAC 提权进程不继承调用进程 env**——PYTHONPATH/CWD 跨不过 UAC，实测证伪 2026-08-30），`--` 前专属参数翻译回进程内环境变量后进入 CLI
 - `plugins/clean_cache_v3.ps1` 是外部导入插件（660 行成熟 PS1），除非显式任务否则不改其内容
 - 插件手动导入、不做自动扫描（ADR-002）；每插件一个 `.meta.json` 与脚本平级（ADR-003）；import/remove 失败零残留（补偿式事务）
 - 参数透传映射放 meta（ADR-007）：CLI 小写连字符 `--scan` → 脚本 `-Scan`（meta `flag` 字段）；`--` 开头值构造源头拒绝（无法跨提权边界保真）
