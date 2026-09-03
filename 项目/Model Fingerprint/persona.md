@@ -26,7 +26,7 @@ status: active
 - 判定分**行为政策**单源 `fingerprint/score_policy.py`（decision_score 双型回退链 / band_for 分档 / apply_evasion_penalty 罚则；数值政策仍 thresholds.py 叶，T-432~T-434）
 - `.gitattributes` `*.py text eol=lf`（2026-08-09 T-412 后全仓生效）
 - 报告形状：三态（deep/quick/regions）经 `report_contract.py` 契约，消费方 `report_kind()` 分派；复核通道形状单源同模块（`REVIEW_CHANNELS` 注册表 + `ReviewBlock.from_dict`，summary/report 消费同一 Seam，T-441）
-- 共享文档（TO-TICKETS / DEV_LOG / CLAUDE / README / MANUAL / CONSENSUS）是事实来源：待办唯一来源 `TO-TICKETS.md`，已做 `DEV_LOG.md`，决策 `CONSENSUS.md`
+- 共享文档（TO-TICKETS / DEV_LOG / AGENTS / README / MANUAL / CONSENSUS）是事实来源：待办唯一来源 `TO-TICKETS.md`，已做 `DEV_LOG.md`，决策 `CONSENSUS.md`
 
 ## 稳定模式
 
@@ -34,8 +34,8 @@ status: active
 - **单一事实来源**：维度注册器（iter_specs/spec_for/collect_evidence）、阈值政策（thresholds.py）、报告契约（report_contract.py 含复核通道形状注册表）、summary 块（PlainSummary 含 ReviewBlock/IdentifyBlock/MetaBlock）、深度探测入口单源 `detect_deep_with_config`（T-440 删 17-kwarg shim，参数词汇表收敛 config.py 一处，CLI 是唯一映射点且被映射锁测试锁定）——消费者经 Seam 读取，不手解析 dict
 - **worktree 串并行 kickoff 流程**：工单带文件范围元数据 → 相交组串行链（同一代理）、不相交组并行（≤3）；基线 commit 作 code-review 固定点；波末 `--no-ff` 合并 + 全量测试
 - **code-review 双轴每批次收尾**（Standards + Spec 并行子智能体）：无阻断 → 诚实性微修进收尾提交；结构性发现录入 TO-TICKETS 推迟候选表
-- **共享文档波内只读**：实现代理不碰 TO-TICKETS/DEV_LOG/CLAUDE，主会话审核后统一收尾提交
-- **洁癖收尾**：测试数/覆盖率/重构计数同步进 CLAUDE.md 与归档行；DEV_LOG 一条一票带测试结果
+- **共享文档波内只读**：实现代理不碰 TO-TICKETS/DEV_LOG/AGENTS，主会话审核后统一收尾提交
+- **洁癖收尾**：测试数/覆盖率/重构计数同步进 AGENTS.md 与归档行；DEV_LOG 一条一票带测试结果
 - **部分实现 stash/worktree 未提交资产交接**：代理崩溃后先盘 stash list / worktree list / status，未提交资产（如 T-428 复现测试 224 行）保留复用、续做代理「不重写、在其基础上转绿」；续做代理先验证不信任
 - **子代理确认断言以交互事实为准**：汇报中「经主 agent 同意」类断言须能回忆对应交互，回忆不起=未发生=流程偏差（T-427 教训）；分发 prompt 显式禁止自行确认范围外改动
 
