@@ -38,6 +38,7 @@ P6.4 期末四轴 code-review 发现 2 条阻断，全部在「打包链」上�
 - 加 bundle.resources → 同步检查构建脚本顺序（资源产出先于 cargo 编译）
 - 打包配方（spec datas）改动 → 断言必须钉接线行 + 打包态 GET / 端到端断言
 - 新 Tauri 项目/换 Tauri 版本 → 复核 resources 安装布局（_up_ 行为可能随版本变）
+- **改完 src 后核对「用户侧运行产物」是否已含改动**（2026-09-07，DeepTutor）：dist / web/out / sidecar exe / 安装包**不随源码更新**——启动页窗口按钮的接线在源码里早已存在，用户旧安装包里的按钮却全是死的；行为修复后必须显式重建（vite / next build / PyInstaller / tauri build）并重装，否则「源码修好了但用户看到的还是旧行为」。桌面壳侧附加事实：首次启动会把打包的 web 运行时拷进工作区缓存（含新鲜度检查），装新包前旧缓存可能仍被使用。
 
 ## 关联
 

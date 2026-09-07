@@ -21,8 +21,8 @@ status: active
 
 ## 固定约束
 
-- **提权永远分离**（ADR-004）：管理器自身永不请求管理员令牌；提权只在 runner/elevator 按工具元数据（`requires_admin`）触发；提权目标为 `python.exe <src/ctrl/_elev_bootstrap.py> [--hold-open] [--output-file <path>] -- <子命令>`（ADR-012 起：不经 cmd/bat 二次解析，消元字符注入面），bootstrap 在提权进程内由脚本自身路径注入 src 到 sys.path（**UAC 提权进程不继承调用进程 env**——PYTHONPATH/CWD 跨不过 UAC，实测证伪 2026-08-30），`--` 前专属参数翻译回进程内环境变量后进入 CLI
-- `plugins/clean_cache_v3.ps1` 是外部导入插件（660 行成熟 PS1），除非显式任务否则不改其内容
+- **提权永远分离**（ADR-004）：管理器自身永不请求管理员令牌；提权只在 runner/elevator 按工具元数据（`requires_admin`）触发；提权目标为 `python.exe <src/ctrl/core/acl.py> [--hold-open] [--output-file <path>] -- <子命令>`（ADR-012 起：不经 cmd/bat 二次解析，消元字符注入面；ADR-013 起 bootstrap 逻辑整体迁入 core.acl，`_elev_bootstrap.py` 保留为旧地址兼容垫片——模块级 `__getattr__` 惰性委托、导入零副作用，elevator._bootstrap_script() 指 core/acl.py），bootstrap 在提权进程内由脚本自身路径注入 src 到 sys.path（**UAC 提权进程不继承调用进程 env**——PYTHONPATH/CWD 跨不过 UAC，实测证伪 2026-08-30），`--` 前专属参数翻译回进程内环境变量后进入 CLI；`acl._assert_env_translation` 校验 hold-open/output-file 请求与进程内 env 一致性，断链 exit 2 诚实失败（防跨进程静默断链）
+- `plugins/clean_cache_v3.ps1` 是外部导入插件（732 行成熟 PS1，T-065 加固后），除非显式任务否则不改其内容
 - 插件手动导入、不做自动扫描（ADR-002）；每插件一个 `.meta.json` 与脚本平级（ADR-003）；import/remove 失败零残留（补偿式事务）
 - 参数透传映射放 meta（ADR-007）：CLI 小写连字符 `--scan` → 脚本 `-Scan`（meta `flag` 字段）；`--` 开头值构造源头拒绝（无法跨提权边界保真）
 - 输出双模式（ADR-005）：CLI 当前终端 / 托盘新窗口（cmd /c start）
@@ -53,6 +53,17 @@ status: active
 - **GUI 导航单一信号**：`MainWindow` 导航只连 `currentItemChanged`（承载点击/键盘/程序化选中），不再连 `itemClicked`——一次选中仅一次 `show_tool_page`；通用页切页从不 delete 旧页（孤儿化 + QThread 销毁风险，TD-44 pre-existing）
 - **display 刷新 Seam**：托盘/外部切换 ICC 后经 `MainWindow.refresh_display_page()` 公共方法刷新 display 页，不再 `getattr` 触 `_display_page`/`_refresh_profiles` 私有成员（TD-41）
 
+## 稳定模式（2026-08-28 ~ 09-04 批次）
+
+- **测试 env 隔离根因修复**（T-079）：`tests/conftest.py` autouse `_restore_environ` fixture——yield 前快照 `dict(os.environ)`、yield 后 `clear()+update()` 整体恢复，根治「`monkeypatch.delenv` 恢复语义不覆盖测试中途直接写 `os.environ[...]`」泄漏；新测试不必再写补救式 env 清理 fixture（红/绿哨兵锚已钉）
+- **registry 只读层去环 + 守卫成对**（T-085，ADR-013）：`list_tools` 模块顶层导入（实测 registry→builtins→display 顶层全链无环，延迟导入是历史防御）；`assert_registry()` 严格守卫（损坏/结构非法抛 `RegistryDegradedError`、缺失/0 字节放行——空注册表合法初始态）与 `registry_file_degraded`（宽容探测）成对（读侧严格 + 写侧拒写同型同源）
+- **ACL 检查点接入**（T-086/087，ADR-013）：读路径（list/info/run/tray/gui）dispatch 前过 `_guard_registry`（损坏 → 中文错误 + exit 1；GUI 捕获模式仍写 done marker 面板不空转）；import/remove 保留内部早停（写路径严格语义在指令内部）；GUI `run_gui` 单实例 acquire 后、create_app 前过 assert_registry（损坏 → return 1 不建窗）；bootstrap 逻辑单点迁 `core/acl.py`（`_elev_bootstrap.py` 为惰性委托兼容垫片）
+- **行流容错单点 ProcessLineReader**（T-071）：`core/process_io.py`（PIPE + errors=replace + iter_lines/exit_code/terminate），runner._run_script_forward 与 ExecWorker.run 复用，中断/强杀语义全保持；`_run_script_forward` 脚本执行统一 `Popen(stdout=PIPE, stderr=STDOUT, text=True, errors="replace")` 逐行转发当前 sys.stdout 并 flush——GUI 捕获模式输出真正进 CTRL_OUTPUT_FILE（clean_cache 面板空转修复，2026-08-28）
+- **display gamma 基准磁盘持久化**（T-076~078）：基准存 `~/.ctrl/display_gamma_baseline.json`（3×256 曲线形状保真、写失败静默 warning、reset 优先级 = 进程内→磁盘→兜底、兜底不落盘防误报）；`_validate_ramp` int-only（float 抛 ValueError 走诚实兜底）；reset_ramp 磁盘分支 `_baseline = disk` 移至 `apply_ramp(baseline)` 成功之后——GDI 写失败不污染内存 `_baseline`（未生效不缓存）、apply 抛 OSError 照常上抛；`_execute_gamma` 门面层 OSError 容错（save_baseline 读失败 warning 不阻断 apply）
+- **clean_cache_v3.ps1 操作纪律**（T-065 + 空转修复）：ps1 无 main 封装（顶层即流程）——**验证仅用 `-Scan` 或函数隔离提取，dot-source 整文件会触发真实 clean**（2026-08-29 事故）；cleanCommand 经 `Invoke-Clean-Command`（Start-Job + Wait-Job 超时 180s + 退出码哨兵 `__CTRL_EXIT__:N` + npm.cmd shim 兼容）；`Get-DirSize`/手写递归跳过 ReparsePoint（手写递归穿 junction 是 11.5h 卡死真凶，`-Recurse` 自带防护、`-Attributes !ReparsePoint` 为显式双保险）
+- **脚本工具交互等待契约**（T-059）：仅 `$Host.UI.RawUI.ReadKey` 在无控制台（pythonw）下无限挂起，`Read-Host`/`cmd /c pause` 安全——`detect_interactive_wait` 探测集 = ReadKey 单 token；含 `IsInputRedirected` 守卫视为已防护不命中；notes 提醒不阻断导入、`_cmd_info` 实时探测显示（脚本本体为单一事实源，不落 meta 冗余标记）
+- **提权链 env 单源**（T-075）：`capture.HOLD_OPEN_ENV` 与 `OUTPUT_FILE_ENV` 单源（镜像定义）；`_fail` 流安全（`sys.stderr or sys.stdout` 回退、双流皆 None 仍 exit 2）；`--output-file ""` 双层拒绝
+
 ## 变更记录
 
 - 2026-08-27（td-consume-4 批次，project-kickoff 全自动档标准档）消费 TECH_DEBT TD-33~42：5 工单（T-035~039）全合并；547 tests / 99.69%；期末四轴 0 阻断；修复轮次 0/5；冒烟通过（含 F1 QtNetwork 前置真机验证）；Neat 清场 5 分支 + 5 worktree + scratch 批次
@@ -60,3 +71,12 @@ status: active
 
 - 2026-08-27（display-gui 批次，project-kickoff 全自动档标准档）9 工单（T-026 spike + T-027~034）全合并；534 tests / 99.69%；期末四轴 0 阻断；修复轮次 0/5；Neat 清场 21 项；TECH_DEBT 新增 TD-33~42 落盘
   - 本批最有价值发现：**spike#1 实测推翻参考实现 win-hdr-fix 的两条假设**（「需管理员」「先 remove 再 add 才生效」均不成立）——参考实现的实证结论必须在本机复验，不能照搬；以及 T-028 HRESULT 符号数缺陷（ctypes `c_long` 返回负值 vs 无符号常量比较永不匹配，真机 `--status` 才触出）
+
+- 2026-08-28（gui-theme 批次）T-058：finesse 产品寄存器 QSS 主题落地（青玉强调 + 冷灰中性，UI 偏好区已并入）；645 tests / 99.72%
+- 2026-08-28（arch-deepen 批次）T-060~064：capture 深模块 / param_codec encode-decode 往返 + decode 行为修正 / GAMMA_MIN-MAX 公开 / _ACTIONS 单声明 / refresh() 公开；733 tests / 99.56%；期末四轴 0 阻断，落债 TD-70~79
+- 2026-08-28（clean_cache 面板空转修复 + td-consume-9）：PIPE 转发 + IsInputRedirected 守卫根治面板空转；detect_interactive_wait 契约（T-059）；679 tests / 99.45%
+- 2026-08-29（clean_cache 加固批次）T-065（ADR-011）：覆盖面 uv/腾讯视频/npx/TRAE + cleanCommand 超时 / ReparsePoint 跳过 / uv --force；746 tests / 99.56%；dot-source 误触真实 clean 事故教训
+- 2026-08-29（td-consume-11/12 批次）T-067~072：ProcessLineReader 行流单点 + ParamSpec to_dict/from_dict 单源 + redirect OSError 中文错误；777 tests / 99.57%，候选区 TD-01~79 全处置
+- 2026-08-30（elev-bootstrap 批次）T-073（ADR-012）：UAC 提权不继承调用进程 env 实证（No module named ctrl 根因）+ bootstrap 引导链，真机 UAC 冒烟通过；785 tests / 99.57%
+- 2026-08-31（td-consume-13/14 批次）T-074~077：bootstrap 流安全 + CTRL_HOLD_OPEN 单源 / gamma 基准磁盘持久化 + int-only 收紧 + 兜底不粘；810 tests / 99.58%
+- 2026-09-04（td-consume-15/16 + acl-system + td-consume-17 + 墓碑 + 人眼验收批次）：T-078 reset_ramp 时序 / T-085~087（ADR-013）ACL 检查系统 / T-079 conftest env 快照恢复 / 删 2 死常量 / GUI 桌面手动验收 + display 肉眼确认闭环；831 tests / 98.82%；候选区 TD-01~100 全处置里程碑（17 批次）

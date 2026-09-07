@@ -39,6 +39,14 @@ Tauri v2 **不再默认注入** `window.__TAURI__` 全局对象。前端必须�
 
 camelCase → snake_case 转换只作用于**顶层参数名**：嵌套 data 按 serde 字段名透传。最终惯例：**单字顶层参数名 + snake_case 嵌套键**；`convertKeys` 这类「统一转换」函数因多此一举被移除——先确认转换边界，再决定要不要写转换层。
 
+## 补充（2026-09-07，DeepTutor）
+
+`withGlobalTauri: true`（tauri.conf.json）会重新注入 `window.__TAURI__` 全局——但**只保证应用页面（tauri.localhost）**：WebView 加载跨源页面（如回环后端 `http://127.0.0.1:8001` 提供的前端）时，全局 API 不保证存在。两条推论：
+
+1. 纯注入型普通 JS（`include_str!` 注入、无法 ESM import `@tauri-apps/api`）不能赌 `window.__TAURI__`——用双路桥接：`window.__TAURI__?.core.invoke` 优先，`window.__TAURI_INTERNALS__.invoke`（每个 Tauri webview 恒在）兜底。
+2. 跨源页面的前端代码要调用壳命令时，同样探测 `window.__TAURI__ || window.__TAURI_INTERNALS__`，别假设全局 API 在。
+
 ## 关联
 
 - [[worktree膨胀26G教训]]
+- [[Tauri 壳方案打包验证铁律]]
