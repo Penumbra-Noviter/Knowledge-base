@@ -68,7 +68,12 @@ status: active
 - **移动端模拟器 GUI 冒烟坐标纪律**：tap 坐标必须来自 UI 树实测（android_ui_describe 元素中心），永不按屏高推算——推算坐标会落系统导航条背景区触发误航；**相邻截图字节完全相同 = 界面未变的自查信号**，切换断言须附内容变更证据，不许凭进程存活放行（2026-08-29 M0 kickoff G0 门实证；详见经验《模拟器GUI冒烟tap坐标须UI树实测》）
 - **网关故障期批次韧性组合拳**：健康探针定窗口（最小 agent 探针通了再派关键路径）→ 降压串行（并发降 1）→ 工单触重开上限后**主会话接续半成品**（短交互抗抖、接续而非重写——半成品往往已近完成）→ 审核错峰补位；故障期工单增量提交防中断（2026-08-29 M1 波 3-5 实证走通：05 半成品 546 行接续直接全绿；详见经验《网关故障期kickoff批次韧性处置》）
 
+- **后台派发子代理 AskUserQuestion 不转达主会话**：`run_in_background: true` 的子代理与主会话只有「完成通知 + SendMessage」两通道，经 AskUserQuestion 提问会无人答复——派发 prompt 必须明示「不要用 AskUserQuestion，遇需协调决策按 best judgment 选最干净方案 + 如实写证据文件 concern 节由主会话事后裁决，不卡住等待」（2026-09-14 消息编辑重发批次实证；详见经验《后台子代理AskUserQuestion不转达主会话》）
+- **Flutter 装配层哑 Provider 挂启动副作用必须 `lazy: false`**：provider 无消费者时 create 默认 lazy 永不执行——冷启动深链接线/排程恢复变真机死代码而「冒烟不抛」是假阴性；装配冒烟须断言副作用真实发生（create 计数/调用记录），不满足于无异常（2026-09-15 阶段 2 W6-F1 实证；详见经验《哑Provider无消费者default-lazy永不执行》）
+
 ## 变更记录
+- 2026-09-15 人机恋阶段 2 批次更新：哑 Provider lazy:false 装配教训（启动副作用死代码实证）+ drift onUpgrade 非事务原子实测（双经验笔记《哑Provider无消费者default-lazy永不执行》《drift迁移非事务原子靠幂等自愈》落库，来源：companion-stage2 kickoff 全自动档）
+- 2026-09-14 消息编辑重发批次更新：后台派发子代理 AskUserQuestion 不转达主会话（派发 prompt 明示 best judgment + concern 上报）；spec 跨工单接口契约（service 签名 vs 端点参数）须拆票前交叉核对——双经验笔记《后台子代理AskUserQuestion不转达主会话》《跨工单接口契约须在spec层显式统一》落库（来源：message-edit-resend kickoff 小档）
 - 2026-08-29 M1 kickoff 更新（数据层+设置交付）：网关故障期批次韧性组合拳（探针定窗口/降压串行/主会话接续半成品/审核错峰）——双经验笔记《网关故障期kickoff批次韧性处置》《Flutter测试碰平台依赖必须超时兜底》落库（来源：M1 kickoff 全自动档）
 - 2026-08-29 M0 kickoff 更新（移动端首批次交付）：模拟器 GUI 冒烟坐标纪律（UI 树实测 + 截图字节自查信号）；经验笔记《模拟器GUI冒烟tap坐标须UI树实测》落库（来源：M0 kickoff 全自动档）
 - 2026-08-19 技术债 F-5/F-6/F-8/F-9/F-12 批次更新：轮询契约「标志发布 ⇒ 文件已落盘」顺序教训（F-12：readiness_loop 先置标志后写 runtime.json，复现 5/30 全捕获，修复后归零）；复现型竞态调查先跑复现循环落盘日志；Implement 实名上报平台限制（MAX_PATH → F-17）；handoff 猜测被实测否定的又一切面（端口冲突 ≠ 真实根因）（来源：F-5~F-12 批次 kickoff 全自动档）

@@ -35,3 +35,7 @@ kickoff 波 3 执行期网关进入不稳 episode：子智能体连续死亡呈�
 ## 关联
 - [[编排型skill子代理职责重叠先划作用域]]（同族：编排故障的另一根因）
 - [[Conver System 高频小坑汇总]]
+
+## 补充实证（2026-09-08 M6 kickoff，全自动档）
+
+**新形态：并行首派 TLS 断连三连**——W1 三 agent 并行（峰值 3）全部 `Cannot connect to API: Client network socket disconnected before secure TLS connection was established`，运行 ~36min 后断连、无 usage（网关/API 层异常非模型行为）→ 处置：**立即重开（不等同波）+ 现场核查**（worktree 已建但零提交；04/06 有未提交半成品——colors.dart 已改 + contrast 测试新建 / wire+service+测试六文件已改）→ 半成品接续 DONE。判层依据：无 usage = 网关层，改 prompt 无用；同批三连 100% 空返回 → 下波降并行观察网关健康。与 M1 故障期组合拳的衔接：探针/降压/主会话接续原则不变，本批增量 = 「并行峰值是 TLS 断连的诱因之一，首派三连后下波保持 2 并发即稳定」。

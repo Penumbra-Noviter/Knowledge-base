@@ -5,7 +5,7 @@ date: 2026-08-09
 project: ZCode 环境
 source: 自身项目实践
 summary: SKILL.md description 超 1024 字符 skill 被整个丢弃，模型只见前 ~250 字符——只写电梯陈述，细节放 when_to_use
-provenance: 2026-08-09 ZCode 环境会话：finesse-ui description 1083→243 字符修复 + validate_skills.py + /finesse 命令（无 git/DEV_LOG，过程见会话记录）
+provenance: 2026-08-09 ZCode 环境会话：finesse-ui description 1083→243 字符修复 + validate_skills.py + /finesse 命令（无 git/DEV_LOG，过程见会话记录）；2026-09-12 补证：dao-skill quality_check.py 白名单拒 disable-model-invocation（AI自动获客会话造 product-facets）
 status: verified
 ---
 
@@ -23,7 +23,8 @@ status: verified
 
 ## 教训
 - `description` 只写 ≤250 字符的"电梯陈述"：做什么（一句话）+ 最强触发词前置；完整触发词表、路由规则、动词命令移入 **`when_to_use`**（该字段展示给模型时**不截断**）
-- 文档化的 frontmatter 键只有 `name/description/when_to_use/license/metadata`，但实践中 `version/user-invocable/disable-model-invocation/argument-hint/allowed-tools/compatibility` 被广泛使用且正常加载——**文档没收录 ≠ 无效，别乱删**（以实证为准，zcode-guide 文档集合不完整）
+  - 文档化的 frontmatter 键只有 `name/description/when_to_use/license/metadata`，但实践中 `version/user-invocable/disable-model-invocation/argument-hint/allowed-tools/compatibility` 被广泛使用且正常加载——**文档没收录 ≠ 无效，别乱删**（以实证为准，zcode-guide 文档集合不完整）
+  - 2026-09-12 补证：不仅「文档没收录 ≠ 无效」，**校验工具的白名单也可能落后于平台**——dao-skill 的 `quality_check.py` 只认 `{name, description}`（`REQUIRED_FRONTMATTER`），把 `disable-model-invocation` 判为「Unexpected frontmatter field」硬 FAIL；但该字段平台上有效（grill-me / product-facets 在用）。**工具白名单 FAIL ≠ 字段无效**，以平台实证为准。
 
 ## 防复发
 - [x] 已落实：`~/.zcode/tools/validate_skills.py`（description >1024 硬错误、>250 警告、缺必需键、解析错误）+ `/finesse` 短命令，升级后跑一次
