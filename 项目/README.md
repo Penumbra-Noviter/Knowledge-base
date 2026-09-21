@@ -21,7 +21,7 @@ date: 2026-08-06
 | Model Fingerprint | `F:\Craft\model-fingerprint` | Model Fingerprint（中转站模型指纹识别） | Python 3.12 CLI + PySide6 GUI + PyInstaller | 已交付，持续迭代 |
 | ctrl 脚本管理器 | `D:\Desktop\Craft\Control` | Ctrl · 统一脚本管理器（定时机/取消/缓存清理 + 插件导入） | Python 3.12 CLI + PySide6 托盘 + PowerShell 插件 | 已交付首期，持续迭代（GUI 已实现，桌面验收闭环 2026-09-04） |
 | 代订场 | `D:\Desktop\Craft\代订场` | 代订场（场地预约自动化，WAF 实战迭代） | Python CLI + scheduler + 超级鹰验证码 | 实战迭代 |
-| 抖音视频下载器 | `D:\Desktop\Craft\抖音视频下载器_reversed` | 抖音视频下载器（逆向） | Python + tkinter + Playwright | 已交付，维护期 |
+| 抖音视频下载器 | `F:\Craft\抖音视频下载器` | 抖音视频下载器（逆向） | Python + tkinter + Playwright | 已交付，维护期（2026-09-20 修正路径：原登记 `D:\Desktop\Craft\抖音视频下载器_reversed` 已过时） |
 | DeepTutor | `D:\Desktop\downloads\DeepTutor\DeepTutor-main` | DeepTutor（agent-native 学习伴侣，fork HKUDS/DeepTutor + 本地 Tauri 桌面壳） | Python FastAPI + Next.js 静态导出 + Tauri/Rust + PyInstaller | 持续迭代（文档体系完整档 2026-09-05） |
 | （夭折） | `D:\Desktop\Craft\6a742fdf7e0125eccfa9b7fd` | Auto-reply（微信自动化） | Python 图像识别 | 夭折，残留未清理 |
 
