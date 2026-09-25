@@ -47,6 +47,8 @@ status: active
 - 2026-08-12 更新：新增动画生命周期收敛模式稳定条目（来源：C4-债4 落地，commit dcb941e..8ecf654）
 - 2026-08-13 更新：生命周期收敛模式条目补 DWS+强闭包环在途销毁崩溃实证 + weakref 破环定案（来源：C4-债5 落地，commit 641ab0c..6001a4a）
 - 2026-08-13 更新：生命周期收敛模式条目补 Qt 同 target 同 property 自动停旧动画实证 + identity 检查定位（来源：C4-债6/7 落地，commit 5103092..b9d01ce）
+- 2026-09-25 更新：项目新增 **C++/Qt 重写版（DFD-Cpp，F:\Craft\DFD-Cpp）**——数据互通是硬契约（data.json/settings.json/accounts 与原版逐字节双向兼容，C++/Python 共用同一运行数据目录）；C++ 版分层对应（business 纯 stdlib / persistence Qt Core / net / theme / motion / robustness / ui）；QNAM 主线程异步免 worker 线程；单实例用 raw named pipe 原子互斥（MSYS2 Qt 的 QLocalServer 跨进程失效，见经验笔记）；构建环境 = MSYS2 MinGW（exFAT 盘 hardlink 坑见 BUILD_NOTES）。
+
 ## 变更记录
 - 2026-08-12 更新：装配/渲染收敛契约 + 存储容错读统一 seam 两条稳定模式并入（来源：C4→C7 架构批次，commit 98b2ee1..9916efb）
 - 2026-08-11 更新：主题契约树遍历、注入 seam 优先、设置 schema 所有者三条稳定模式并入（来源：架构加深批次 C1/C2/C3，commit 633f549 起）
