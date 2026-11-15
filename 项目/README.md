@@ -23,6 +23,7 @@ date: 2026-08-06
 | 代订场 | `D:\Desktop\Craft\代订场` | 代订场（场地预约自动化，WAF 实战迭代） | Python CLI + scheduler + 超级鹰验证码 | 实战迭代 |
 | 抖音视频下载器 | `F:\Craft\抖音视频下载器` | 抖音视频下载器（逆向） | Python + tkinter + Playwright | 已交付，维护期（2026-09-20 修正路径：原登记 `D:\Desktop\Craft\抖音视频下载器_reversed` 已过时） |
 | DeepTutor | `D:\Desktop\downloads\DeepTutor\DeepTutor-main` | DeepTutor（agent-native 学习伴侣，fork HKUDS/DeepTutor + 本地 Tauri 桌面壳） | Python FastAPI + Next.js 静态导出 + Tauri/Rust + PyInstaller | 持续迭代（文档体系完整档 2026-09-05） |
+| deepseek-harness | `D:\Deepseek harness` | DeepSeek Harness（dsh 配置/插件/tools 仓库，hy-memory 记忆引擎接入） | Node.js cordis 插件 + Python 工具脚本 + PowerShell 运维 | 持续迭代（2026-10-24 技术债消费批次完成） |
 | （夭折） | `D:\Desktop\Craft\6a742fdf7e0125eccfa9b7fd` | Auto-reply（微信自动化） | Python 图像识别 | 夭折，残留未清理 |
 
 ## 命名史

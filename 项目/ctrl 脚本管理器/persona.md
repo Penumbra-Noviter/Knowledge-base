@@ -64,7 +64,28 @@ status: active
 - **脚本工具交互等待契约**（T-059）：仅 `$Host.UI.RawUI.ReadKey` 在无控制台（pythonw）下无限挂起，`Read-Host`/`cmd /c pause` 安全——`detect_interactive_wait` 探测集 = ReadKey 单 token；含 `IsInputRedirected` 守卫视为已防护不命中；notes 提醒不阻断导入、`_cmd_info` 实时探测显示（脚本本体为单一事实源，不落 meta 冗余标记）
 - **提权链 env 单源**（T-075）：`capture.HOLD_OPEN_ENV` 与 `OUTPUT_FILE_ENV` 单源（镜像定义）；`_fail` 流安全（`sys.stderr or sys.stdout` 回退、双流皆 None 仍 exit 2）；`--output-file ""` 双层拒绝
 
+## 稳定模式（td-consume-25 批次，2026-10-05）
+
+- **技术债全量消费打法**：候选区一次清空 = 8 立项 6 工单 + Speculative 复核关闭；Worth exploring 由 Grilling 拍板、Speculative 关闭须 git grep 一句话理由——票面修复建议是候选假设，Grilling 阶段必须读码实证（TD-154「第三处同形」触发未达成被否定即实证例）。
+- **合并票两 commit 粒度压缩串行波次**：共享同文件族的串行票（显示组 4 票共享 display_*）合并为一张票、票内两个独立 commit（每 commit 各自 TDD + 范围覆盖率），波次从 5 压到 3——减少串行 worktree/merge 摩擦，合并票验收条数票级合并（≤8）。
+- **check-complete.py 只认四状态 token**：编排文件未开工票**不写 STATUS 行**（PENDING 会被判「未知状态」报错）；派发后才按 DONE/DONE_WITH_CONCERNS/NEEDS_CONTEXT/BLOCKED 落盘。
+- **提权判定进程级触发式**（TD-152 消费面归位）：`needs_elevation` 是语义源（不含 is_admin），进程级触发 = `needs_elevation ∧ not is_admin()`，runner 与 GUI 通用页共用——已提权进程不再多跳 UAC。
+- **状态判据单源化**（TD-149）：CLI/GUI 的 gamma 恒等判据收敛到引擎 `is_identity_ramp`，GUI refresh 捕获 `save_baseline()` 返回值存硬件快照（零新增 IO）；gamma ramp 不可反解回因子 vs DWM 矩阵可反解 = 方向性不对称属物理约束显式记录。
+
+## 稳定模式（arch-review-20261024 批次，2026-10-24）
+
+- **架构评审候选落地形态**：走查（热点定向 + 复核关闭表去重）→ HTML 报告（%TEMP%，Tailwind+Mermaid）→ 用户按强度顺序拍板 → Grilling 决策账本（D1–Dn，含备选代价）→ 4 票并行 + 收尾票。候选「第 2 次建议」必须重估上次关闭前提（本批 C1 的 TD-66/78 关闭理由因消费面变化而过期，C4 的 TD-62 关闭前提被 ADR-025 抽走）。
+- **量化/判据单点化的收尾套路**：谓词化（is_identity_ramp / requires_elevation 消费）→ 中间人删除（build_cli_tokens 删、GUI 直调 codec）→ 重复收口（`_run_dwm_action` 一类 helper 收「警告捕获 + 失败措辞」，回弹/事件位留槽内）。
+- **审核子智能体连续 2 次空返回 = 主会话直做**（本批波 1 增量审核与期末四轴均命中）：只读审计任务可脚本化直做（shared-file diff 零改 / grep 残留 / 点名锚 / 边界测试），不需第三次派发。
+- **TECH_DEBT 表格批注必须在单元格内**：行尾 `|` 之后追加文本会破坏列数（pool_cleanup_check 报「表格格式异常」）——批注并入状态单元格后再补行尾 `|`。
+
 ## 变更记录
+
+- 2026-10-24（arch-review-20261024 批次，/improve-codebase-architecture → 5 候选落地）：C2 提权判定归位 / C1 删 build_cli_tokens 转发（环消除）/ C3 DWM 量化收归 binding / C4 DisplayPage 动作族收口 A 层 / C5 cli HOLD_OPEN helper；4 工单（T-130~133）+ 收尾票；全量 1229→1227 passed / 99.08%；四轴直做通过（0 阻断）；Neat 清场 4 分支 + 4 worktree + scratch
+  - 本批最有价值发现：**架构评审的「复核关闭前提」会随代码演进失效**——C1 的 TD-66/78 关闭理由（「runner 与 GUI 双入口共用 build_cli_tokens」）因 T-061/T-067 后消费面已变而过期；C4 的 TD-62 关闭前提（状态模型在页面）被 ADR-025 抽走。走查时对「第 2 次建议」必须核对关闭前提是否仍成立，否则会重复关闭真实摩擦
+
+- 2026-10-05（td-consume-25 批次，project-kickoff 全自动档标准档）消费 TECH_DEBT TD-149~157：8 立项 6 工单（T-122~127，T-126/T-127 为两 commit 合并票）+ TD-154 复核关闭，候选区清空；1223 tests / 99.01%；波 1 首派 3 票全中断/失败重开 3 次全通过、波 2/3 首派即过；期末四轴需修 Recommended 无阻断（docs 2 项 + 代码级 2 项落债 TD-162/163）；真机 GUI 冒烟 SMOKE_OK；Neat 清场 11 分支 + 6 worktree + 2 scratch；新债候选区 TD-158~163
+  - 本批最有价值发现：**波 1 首派三票全被网关层/中断打断，重开 3 次全通过零返工**——全自动档并行波次首波应先发探路票验证网关健康（skill 已有此规则，实证应验）；合并票两 commit 粒度把 5 串行波压到 3 波，显示族串行链成本减半
 
 - 2026-08-27（td-consume-4 批次，project-kickoff 全自动档标准档）消费 TECH_DEBT TD-33~42：5 工单（T-035~039）全合并；547 tests / 99.69%；期末四轴 0 阻断；修复轮次 0/5；冒烟通过（含 F1 QtNetwork 前置真机验证）；Neat 清场 5 分支 + 5 worktree + scratch 批次
   - 本批最有价值发现：**F1 真机验证**（T-037 把 QtNetwork 构造前置到 QApplication 之前不崩溃，防御路径生效）+ 范围授权教训（TD-34 GUI 层验收的实现文件 generic_page.py 在 plan-tickets 文件范围外——验收语义指向的实现文件可能不在范围，plan-tickets 需交叉核对验收锚点与其实现文件）
@@ -80,3 +101,25 @@ status: active
 - 2026-08-30（elev-bootstrap 批次）T-073（ADR-012）：UAC 提权不继承调用进程 env 实证（No module named ctrl 根因）+ bootstrap 引导链，真机 UAC 冒烟通过；785 tests / 99.57%
 - 2026-08-31（td-consume-13/14 批次）T-074~077：bootstrap 流安全 + CTRL_HOLD_OPEN 单源 / gamma 基准磁盘持久化 + int-only 收紧 + 兜底不粘；810 tests / 99.58%
 - 2026-09-04（td-consume-15/16 + acl-system + td-consume-17 + 墓碑 + 人眼验收批次）：T-078 reset_ramp 时序 / T-085~087（ADR-013）ACL 检查系统 / T-079 conftest env 快照恢复 / 删 2 死常量 / GUI 桌面手动验收 + display 肉眼确认闭环；831 tests / 98.82%；候选区 TD-01~100 全处置里程碑（17 批次）
+- 2026-09-23（td129-td132 批次，全自动档标准档）：TD-129/TD-132 折回消费——T-120（GUI DWM 读回降级警告可见化：catch_warnings + 状态位 + 状态标签锚）/ T-121（巨 int 逃逸校验契约归一：float 前置归一四处同形，写侧中文 ValueError / query None / 谓词 False；10**400 防复发锚 + 2**200 float32 回归锚）；1138 tests / 98.96%；波末增量 0 阻断、期末四轴 Critical 0 / Recommended 1（＝文档同步缺口，收尾 docs commit 闭环）；候选区 TD-128/130/131/133~135/137~141（脚注「当前最大 TD-141」）
+  - 本批教训：**批次文档收尾须与代码合并同一窗口落盘**——docs 收尾晚于期末审核窗口时，审核把「收尾迟到」记为 Recommended 文档同步缺口（S1/SP1 双轴同源）。下批把 TO-TICKETS/TECH_DEBT/PROJECT_REFERENCE/DEV_LOG 的收尾放在「波末合并后、期末审核派发前」，不要等审核回来才写
+## 稳定模式（td-consume-27 批次，2026-11-13）
+
+- **clean_cache 生态位定型**（ADR-028 修订后）：加载期零动态编译（`Get-PathProbe` 三态探测：missing/failed/present，探测失败绝不零计成成功）；目录清空唯一通道 = `Remove-DirectoryTree` .NET 递归（逐层判 ReparsePoint 只删本体，**robocopy 已绝迹**——`/MIR /XJ` 会穿透树内 junction 清空链接目标，见经验笔记）；枚举唯一原语 = `Get-FsEntries`（计量/匹配/开发垃圾三消费方共用，junction 只披露「保留 N 个链接」不删本体）；兜底触发唯一入口 = `Test-FallbackWarranted`（`-Scenario Tree|File` 两口径逐位等价，表驱动 oracle 锁定）；状态诚实 = `Failed==0 且残留>0 或 Links>0` 不得「已清理」；`-WhatIf` 对 agreeRequired 项输出「需 -Agree，将跳过」。
+- **PS1 单测接缝 = AST 提取**：`Parser::ParseFile` 提取函数定义 + 传递依赖闭包 + `Invoke-Expression`，测试在 tmp_path 真调用（harness `_AST_HARNESS`/`_run_ast_unit`，勿重写）——生产不加守卫不拆文件（plugin_store 单文件模型约束）；拼接 `\?\` 路径禁用 Join-Path（PS 5.1 拒收，字符串拼接）。
+- **删除工具的护栏边界必须逐个证伪**：外部工具的「排除」语义只保护它声称的方向（/XJ 保护遍历不保护镜像删除）；凡删除链引入新依赖/新参数，先构造穿透实验再采信。
+- **链中重启实操**：同一 Implement 上下文连跑多票后连续上游超时 → 交接摘要落盘（现状 + 已诊断红点 + 剩余工作 + 已定前提）→ 新调用接续，一次通过；未提交工作原样保留是前提（不回滚不重建）。
+
+## 稳定模式（td-consume-29 批次，2026-11-15）
+
+- **clean_cache 覆盖清单单源化**（TD-181 消费，ADR-028 修订）：`plugins/config.json` 为运行时事实源（存在即优先），`Get-DefaultConfig` 内置默认表与其**同步维护为同一并集、逐字段对齐**（name/root/caches/process/risk/note，`_doc` 元数据豁免）——双源 diff 测试守护两源 apps 集合相等（`_APPS_ALIGN_FIELDS` 固定 6 键常量，**新增字段需显式扩展否则不被守护**，期末四轴 Falsify 🟡 记录）；并集即上限、无第三条路径（删除面不扩宽回归锚）；导入环境无 config 时回退内置默认表（`plugin_store.import_tool` 不复制 config.json，docstring 声明）。
+- **PS 记账/出词收敛套路**：`$script:scanTotal +=` 12 处直写收敛为 `Add-ScanTotal` 单点（非正数不进账，语义不变）；包管理器 clean 分支不再硬编码「已清理」改三态出词（Format-RemoveStatus 口径，目录残留披露「部分(…，残留 N)」）；apps gateFailed 并入聚合（同一行不得「已清理」与「探测失败」同现，失败计数只算删除失败不误计）；devGarbage 根 failed/missing 两态分离。PS 反向锚计数法：`scanTotal +=` 字面 == 1（helper 内）、`switch ($script:mode)` 9 = 分派 8 + 横幅 1。
+- **npx 进程防护**（TD-183 消费）：`process:["node"]` 而非 `["node","npx"]`——**Windows 无 npx 同名进程**（是 npx.cmd 包装，`_npx` 真实写入者是 node.exe），`"npx"` 名单项在 Get-Process 下无效；`"node"` 命中所有 node.exe 属过度防护但方向安全（宁可跳过不可删错）；进程检查提取 `Test-ProcessRunning` 共享 helper（空白过滤 + `Get-Process -ErrorAction SilentlyContinue` 非空判定）。
+- **DisplayPage 状态刷新归属**（TD-179 消费）：变更路径补显式 `_update_status()`（gamma 拖动/还原对齐 DWM 成功路径）；`_run_dwm_action` 失败详情经结构化异常传递、**不拿 QLabel 当消息总线**（removeprefix 文本回读是反模式）；gamma/DWM 回滚收敛共享 `_rollback_to_prev` helper（恰 1 def 2 消费，S4 源码锚）；`sync_ui_from_applied` 全仓零生产调用的陈旧死代码删除——「外部同步」真路径是 `refresh()`/`refresh_display_page()`。
+- **display 双表交叉不变式**（TD-182 消费）：`display_schema.py` DISPLAY_PARAMETERS 13 名 vs `display.py` `_ACTIONS` 11 动作 params 平铺——各有自洽锚但零交叉断言是盲区；交叉不变式测试（双向 + Falsify 诊断含具体参数名）守护，只加一侧即报警（schema 多出→CLI「没有指定动作」；_ACTIONS 多出→提权重启静默丢参）。
+- **完成通知 ≠ 完成事实，以磁盘为准**（T-141 网关超时中断实证）：Implement/审核子智能体汇报前断连（「等待上游恢复超时」）≠ 失败——先查 worktree commit + 证据文件 + 全量跑；工作已完成仅未汇报 → 主会话磁盘核验 + 复核后不重开（重开仅为汇报仪式）、直接按完成走。这是「子代理证据落盘必须磁盘核验」的完成侧变体。
+
+## 变更记录（续）
+
+- 2026-11-15（td-consume-29 批次，全自动档标准档）消费 TECH_DEBT TD-179~183 全量：5 立项 4 工单（T-140/141/142/143，波 1 三票并行 + 波 2 串行合票），候选区清空里程碑；1292→1327 passed / 99.08%；波 1 增量审核无阻断（F1 note 键已吸收）；期末四轴 0 Critical / 0 Recommended（2 🟡 Falsify 观察 + 1 nit docstring 笔误已修）；T-141 汇报前网关超时中断但磁盘核验完整（未重开）；主会话独立真机 -Scan 冒烟（独立验证不采信汇报）
+  - 本批最有价值发现：**删除链证伪输入必须覆盖「进程运行态」「覆盖清单双源」「状态词合法组合」**三新维度（前批已证链接拓扑）——本批 Falsify 最佳输入 = npx 进程在跑（防删错）、双源漂移（防清单失真）、「已清理」+「探测失败」同现（防状态谎报），三者都被波内实现/审核拦在合入前
